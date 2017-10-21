@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+	android:padding="15dp"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/table_name"
+        android:id="@+id/tableNameLabel"
+        />
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/tableNameLabel"
+        android:id="@+id/tableName"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tableName"
+		android:layout_alignParentLeft="true"
+		android:text="@string/columns"
+		android:id="@+id/columnsLabel"
+        />
+	<EditText android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/tableName"
+		android:layout_alignParentRight="true"
+		android:layout_toRightOf="@id/columnsLabel"
+		android:id="@+id/columns"
+		/>
+	<TextView android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/columns"
+		android:layout_alignParentLeft="true"
+		android:text="@string/types"
+		android:id="@+id/typesLabel"
+		/>
+	<EditText android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/columns"
+		android:layout_alignParentRight="true"
+		android:layout_toRightOf="@id/typesLabel"
+		android:id="@+id/types"
+		/>
+	<TextView android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/types"
+		android:layout_alignParentLeft="true"
+		android:text="@string/labels"
+		android:id="@+id/labelsLabel"
+	/>
+	<EditText android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/types"
+		android:layout_alignParentRight="true"
+		android:layout_toRightOf="@id/labelsLabel"
+		android:id="@+id/labels"
+	/>
+	<TextView android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/labels"
+		android:layout_alignParentLeft="true"
+		android:text="@string/weights"
+		android:id="@+id/weightsLabel"
+	/>
+	<EditText android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/labels"
+		android:layout_alignParentRight="true"
+		android:layout_toRightOf="@id/weightsLabel"
+		android:id="@+id/weights"
+	/>
+	<Button android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentBottom="true"
+		android:text="@string/commit"
+		android:onClick="commitClick"
+		android:id="@+id/commitButton"
+		/>
+	<Button android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_toLeftOf="@id/commitButton"
+		android:onClick="cancelClick"
+		android:text="@string/cancel"
+		/>
+</RelativeLayout>

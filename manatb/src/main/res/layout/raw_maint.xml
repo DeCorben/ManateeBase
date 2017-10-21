@@ -1,0 +1,46 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+	android:padding="15dp"
+>
+	<ScrollView android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentTop="true"
+		android:layout_above="@+id/cancelButton"
+	>
+		<LinearLayout android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:padding="5dp"
+			android:id="@+id/cursorList"
+			android:orientation="vertical"
+			>
+		</LinearLayout>
+	</ScrollView>
+	<Button android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentRight="true"
+		android:id="@+id/updateButton"
+		android:text="@string/update"
+		android:padding="5dp"
+		android:onClick="addClick"
+	/>
+	<Button android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_toLeftOf="@id/updateButton"
+		android:layout_alignParentBottom="true"
+		android:id="@id/cancelButton"
+		android:text="@string/cancel"
+		android:padding="5dp"
+		android:onClick="cancelClick"
+	/>
+	<Button android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_toLeftOf="@id/cancelButton"
+		android:layout_alignParentBottom="true"
+		android:id="@+id/deleteButton"
+		android:text="@string/delete"
+		android:padding="5dp"
+		android:onClick="deleteClick"
+	/>
+</RelativeLayout>
