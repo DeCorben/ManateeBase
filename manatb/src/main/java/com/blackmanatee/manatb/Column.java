@@ -1,9 +1,30 @@
 package com.blackmanatee.manatb;
 
 public class Column{
+	private static final boolean debug = true;
 	private String name,label;
 	private int type,weight;
 	private boolean show,prim;
+
+	@Override
+	public boolean equals(Object o){
+		if(!(o instanceof Column))
+			return false;
+		Column comp = (Column)o;
+		if(!name.equals(comp.getName()))
+			return false;
+		if(!label.equals(comp.getLabel()))
+			return false;
+		if(type != comp.getType())
+			return false;
+		if(weight != comp.getWeight())
+			return false;
+		if(show != comp.isShow())
+			return false;
+		if(prim != comp.isPrim())
+			return false;
+		return true;
+	}
 	
 	public void setPrim(boolean prim)
 	{

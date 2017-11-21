@@ -11,28 +11,26 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.*;
 
 /**
- * Created by DeCorben on 8/9/2017.
+ * Created by DeCorben on 11/19/2017.
  */
+
 @RunWith(AndroidJUnit4.class)
-public class ManaTBActivityTest {
+public class TableEditActivityTest {
     @Rule
     public ActivityTestRule<TableViewActivity> rule = new ActivityTestRule<TableViewActivity>(TableViewActivity.class);
 
-    @Before
-    public void setUp() throws Exception {
-
+    @Test
+    public void testCommitClick(){
+        fail();
     }
 
     @Test
-    public void testAddTable(){
-        onView(withId(R.id.dbAddAction)).perform(click());
-        onView(withId(R.id.tableName)).perform(typeText("foo"));
-
+    public void testCancelClick(){
+        fail();
     }
 
-    @After
-    public void tearDown() throws Exception {
-
+    @Test
+    public void testSaveWhenPaused(){
+        fail();
     }
-
 }

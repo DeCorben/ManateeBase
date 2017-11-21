@@ -3,7 +3,6 @@ package com.blackmanatee.manatb;
 import java.util.*;
 import android.content.*;
 import android.database.sqlite.*;
-import android.view.View.*;
 import android.util.*;
 
 public final class ManaTB {

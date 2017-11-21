@@ -15,6 +15,8 @@ public class Contract implements BaseColumns{
 	//weights need defaults when columns are added
 	//full type constants
 
+	private static final boolean debug = true;
+
 	public static final int T_TEXT = 0;
 	public static final int T_INT = 1;
 	
@@ -26,7 +28,9 @@ public class Contract implements BaseColumns{
 	}
 
 	public Contract(String n,String[] c,int[] t){
-		init(n,c,t,new int[c.length],new String[c.length]);
+		int[] l = new int[c.length];
+		for(int z=0;z < l.length;z++) l[z] = 1;
+		init(n,c,t,l,c);
 	}
 	
 	public Contract(String n,String[] c,int[] t,int[] w,String[] h){
@@ -56,20 +60,13 @@ public class Contract implements BaseColumns{
 
 	@Override
 	public boolean equals(Object o){
-		try{
-			Contract comp = (Contract)o;
-			if(!table.equals(comp.getName()))
-				return false;
-			if(getColCount() != comp.getColCount())
-				return false; 
-			for(int z=0;z<getColCount();z++){
-				if(!grid.get(z).equals(comp.getColumns().get(z)))
-					return false;
-			}
-		}
-		catch(ClassCastException ex){
+		if(!(o instanceof Contract))
 			return false;
-		}
+		Contract comp = (Contract) o;
+		if (!table.equals(comp.getName()))
+			return false;
+		if (!grid.equals(comp.getColumns()))
+			return false;
 		return true;
 	}
 
