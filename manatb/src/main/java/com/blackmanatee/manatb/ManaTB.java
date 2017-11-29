@@ -1,5 +1,6 @@
 package com.blackmanatee.manatb;
 
+import java.io.File;
 import java.util.*;
 import android.content.*;
 import android.database.sqlite.*;
@@ -28,7 +29,6 @@ public final class ManaTB {
         tables = new HashMap<String,Contract>();
 		context = c;
 		loadMeta();
-		
     }
 
     public static ManaTB get(Context c){
@@ -36,6 +36,12 @@ public final class ManaTB {
             me = new ManaTB(c);
         return me;
     }
+
+    public static void clear(){
+    	me = null;
+    	File f = new File("/data/data/com.blackmanatee.manatb/databases/manat.db");
+    	f.delete();
+	}
 	
 	private void loadMeta(){
 		ContractDbHelper db = new ContractDbHelper(context,MANA_DB,META);
@@ -122,15 +128,13 @@ public final class ManaTB {
 	public void deleteTable(String t){
 		if(debug)
 			Log.d("manaT","ManaTB Marco "+t);
-		//VVVVVremoved for debugging
-		//tables.remove(t);
+		tables.remove(t);
 		//update contract table
 		if(debug)
 			Log.d("manaT","ManaTB delete: begin meta update");
 		SQLiteDatabase db = new ContractDbHelper(context,MANA_DB,META).getWritableDatabase();
 		db.beginTransaction();
-		//VVVVVremoved for debugging
-		//db.delete(META.getName(),"name = '"+t+"'",null);
+		db.delete(META.getName(),"name = '"+t+"'",null);
 		if(debug)
 			Log.d("manaT","ManaTB delete: end meta update");
 		db.endTransaction();
