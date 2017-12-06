@@ -45,7 +45,15 @@ public class Contract implements BaseColumns{
 			addColumn(new Column(c[z],t[z],h[z],w[z],true,pk));
 		}
 	}
-	
+
+	public String toXml(){
+		String out = "<contract>\n";
+		for(Column c:grid){
+			out += "\t"+c.toXml().replaceAll("\n","\t\n")+"\n";
+		}
+		return out + "</contract>";
+	}
+
 	public String[] getColumnList(){
 		String[] out = new String[getColCount()];
 		for(int z=0;z<getColCount();z++){

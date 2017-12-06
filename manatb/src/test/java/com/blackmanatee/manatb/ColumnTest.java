@@ -10,6 +10,19 @@ import static org.junit.Assert.*;
 public class ColumnTest {
     private Column c;
 
+    @Test
+    public void testToXml(){
+        assertEquals("<column>\n" +
+            "\t<column_name>lorem</column_name>\n" +
+            "\t<type>string</type>\n" +
+            "\t<label>Ipsum</label>\n" +
+            "\t<weight>1</weight>\n" +
+            "\t<show_column>true</show_column>\n" +
+            "\t<primary>false</primary>\n" +
+            "</column>"
+            ,c.toXml());
+    }
+
     @Before
     public void setup(){
         c = new Column("lorem",0,"Ipsum",1,true,false);

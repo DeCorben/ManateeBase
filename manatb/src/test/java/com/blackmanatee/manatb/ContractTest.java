@@ -13,6 +13,30 @@ import static org.junit.Assert.*;
 public class ContractTest {
     private Contract c;
 
+    @Test
+    private void testToXml(){
+            assertEquals("<contract>\n" +
+                    "\t<table_name>foo</table_name>\n" +
+                    "\t<column>\n" +
+                    "\t\t<column_name>name</column_name>\n" +
+                    "\t\t<type>string</string>\n" +
+                    "\t\t<label>Name</label>\n" +
+                    "\t\t<weight>3</weight>\n" +
+                    "\t\t<show_column>true</show_column>\n" +
+                    "\t\t<primary>true</primary>\n" +
+                    "\t</column>\n" +
+                    "\t<column>\n" +
+                    "\t\t<column_name>value</column_name>\n" +
+                    "\t\t<type>integer</string>\n" +
+                    "\t\t<label>Value</label>\n" +
+                    "\t\t<weight>1</weight>\n" +
+                    "\t\t<show_column>true</show_column>\n" +
+                    "\t\t<primary>false</primary>\n" +
+                    "\t</column>\n" +
+                    "</contract>"
+                    ,c.toXml());
+    }
+
     @Before
     public void before(){
         c = new Contract("foo",new String[]{"name","value"},new int[]{0,1},new int[]{3,1},new String[]{"Name","Value"});

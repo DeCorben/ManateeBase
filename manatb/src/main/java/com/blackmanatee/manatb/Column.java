@@ -6,6 +6,26 @@ public class Column{
 	private int type,weight;
 	private boolean show,prim;
 
+	public String toXml(){
+		String out = "<column>\n";
+		if(name != null)
+			out += "\t<column_name>"+name+"</column_name>\n";
+		switch(type){
+			case Contract.T_TEXT:
+				out += "\t<type>string</type>\n";
+				break;
+			case Contract.T_INT:
+				out += "\t<type>integer</type>\n";
+				break;
+		}
+		if(label != null)
+			out += "\t<label>"+label+"</label>\n";
+		out += "\t<weight>"+weight+"</weight>\n" +
+			"\t<show_column>"+show+"</show_column>\n" +
+			"\t<primary>"+prim+"</primary>\n";
+		return out + "</column>";
+	}
+
 	@Override
 	public boolean equals(Object o){
 		if(!(o instanceof Column))
