@@ -15,35 +15,52 @@ public final class ManaTB {
 	//multiple database files
 	
 	private static final boolean debug = true;
-	public static final String MANA_DB = "manat.db";
-	public static final Contract META = 
-		new Contract("meta",new String[]{"name","cols","types","weights","labels"},new int[]{0,0,0,0,0},new int[]{1,1,1,1,1},new String[]{"Name","Columns","Types","Weights","Labels"});
-	
+	//public static final String MANA_DB = "manat.db";
+	//public static final Contract META =
+	//	new Contract("meta",new String[]{"name","cols","types","weights","labels"},new int[]{0,0,0,0,0},new int[]{1,1,1,1,1},new String[]{"Name","Columns","Types","Weights","Labels"});
+
     private static ManaTB me;
-	private static Context context;
+	//private static Context context;
     private static String db;
     private static HashMap<String,Contract> tables;
 
-    public ManaTB(Context c){
+    public ManaTB(SharedPreferences p){
         db = "";
         tables = new HashMap<String,Contract>();
-		context = c;
-		loadMeta();
+		//context = c;
+		//loadMeta();
+		if(p != null)
+			loadContracts(p);
     }
 
-    public static ManaTB get(Context c){
+    public static ManaTB get(SharedPreferences p){
         if(me == null)
-            me = new ManaTB(c);
+            me = new ManaTB(p);
         return me;
     }
 
+    public void saveContracts(SharedPreferences.Editor pref){
+        String list = "";
+        for(String s:tables.keySet()){
+            list += ";"+s;
+            Contract c = getTable(s);
+            pref.putString(s,c.toXml());
+        }
+        pref.putString("list",list);
+        pref.commit();
+	}
+
+	public void loadContracts(SharedPreferences pref){
+
+	}
+
     public static void clear(){
     	me = null;
-    	File f = new File("/data/data/com.blackmanatee.manatb/databases/manat.db");
-    	f.delete();
+    	//File f = new File("/data/data/com.blackmanatee.manatb/databases/manat.db");
+    	//f.delete();
 	}
 	
-	private void loadMeta(){
+	/*private void loadMeta(){
 		ContractDbHelper db = new ContractDbHelper(context,MANA_DB,META);
 		SQLiteCursor cur = (SQLiteCursor)db.getReadableDatabase().query(META.getName(),null,null,null,null,null,META.getColumn(1)+" ASC",null);
 		cur.moveToFirst();
@@ -62,7 +79,7 @@ public final class ManaTB {
 			cur.moveToNext();
 		}
 		cur.close();
-	}
+	}*/
 
     public void setDb(String d){
         db = d;
@@ -78,7 +95,7 @@ public final class ManaTB {
 			Log.d("manaT","added contract:"+tables.get(c.getName()).getName());
 		}
 		//update contract table
-		SQLiteDatabase db = new ContractDbHelper(context,MANA_DB,META).getWritableDatabase();
+		/*SQLiteDatabase db = new ContractDbHelper(context,MANA_DB,META).getWritableDatabase();
 		ContentValues cv = new ContentValues();
 		cv.put("name",c.getName());
 		String cols = "";
@@ -118,7 +135,7 @@ public final class ManaTB {
 			else
 				Log.d("manaT","add failed");
 		}
-		cur.close();
+		cur.close();*/
     }
 
     public Contract getTable(String t){
@@ -130,7 +147,7 @@ public final class ManaTB {
 			Log.d("manaT","ManaTB Marco "+t);
 		tables.remove(t);
 		//update contract table
-		if(debug)
+		/*if(debug)
 			Log.d("manaT","ManaTB delete: begin meta update");
 		SQLiteDatabase db = new ContractDbHelper(context,MANA_DB,META).getWritableDatabase();
 		db.beginTransaction();
@@ -173,16 +190,16 @@ public final class ManaTB {
 			//try{
 				Log.d("manaT","cursor check");
 				SQLiteCursor cur = (SQLiteCursor)db.query(t,null,null,null,null,null,null,null);
-			/*}
+			}
 			catch(SQLiteException ex){
 				Log.d("manaT","table dropped");
-			}*/
+			}
 			Log.d("manaT","end table drop");
 			Log.d("manaT","ManaTB delete: end table update");
 		}
 		db.close();
 		if(debug)
-			Log.d("manaT","ManaTB Polo");
+			Log.d("manaT","ManaTB Polo");*/
 	}
 
     public Contract getDefaultTable(){

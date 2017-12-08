@@ -32,7 +32,7 @@ public class TableViewActivity extends Activity{
         super.onResume();
 		if(debug)
 			Log.d("manaT","TableView marco");
-		ManaTB tb = ManaTB.get(this);
+		ManaTB tb = ManaTB.get(null);
 		if(debug)
 			Log.d("manaT","TableView end polo");
 		if(tb.getDb().equals(""))
@@ -66,7 +66,7 @@ public class TableViewActivity extends Activity{
 	}
 	
 	public void deleteClick(View v){
-		ManaTB tb = ManaTB.get(this);
+		ManaTB tb = ManaTB.get(null);
 		String item = v.getContentDescription().toString();
 		tb.deleteTable(item);
 		DeleteAdapter da = (DeleteAdapter)((ListView)findViewById(R.id.tableList)).getAdapter();

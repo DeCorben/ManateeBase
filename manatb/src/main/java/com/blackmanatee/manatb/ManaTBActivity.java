@@ -34,7 +34,7 @@ public class ManaTBActivity extends Activity implements AdapterView.OnItemClickL
 		if(debug)
 			Log.d("manaT","ManaTB resume");
 		//retrieve database contents
-		ManaTB tb = ManaTB.get(this);
+		ManaTB tb = ManaTB.get(null);
 		if(tb.getDb().equals(""))
 			tb.setDb("manatbase.db");
 		if(debug)
@@ -43,17 +43,17 @@ public class ManaTBActivity extends Activity implements AdapterView.OnItemClickL
 		String dbName = getIntent().getStringExtra("db");
 		if(dbName == null)
 			dbName = "";
-		if(dbName.equals("meta")){
-			schema = tb.META;
-			schHelp = new ContractDbHelper(this,tb.MANA_DB,schema);
+		/*if(dbName.equals("meta")){
+			//schema = tb.META;
+			//schHelp = new ContractDbHelper(this,tb.MANA_DB,schema);
 		}
-		else{
+		else{*/
 			String tab = getIntent().getStringExtra("name");
 			if(debug)
 				Log.d("manaT","Table:"+tab);
 			schema = tab==null?tb.getDefaultTable():tb.getTable(tab);
 			schHelp = new ContractDbHelper(this, tb.getDb(), schema);
-		}
+		//}
 		SQLiteDatabase db = schHelp.getReadableDatabase();
 		SQLiteCursor cursor = (SQLiteCursor) db.query(schema.getName(), null, null, null, null, null, schema.getColumn(0) + " ASC", null);
 		if(debug)
@@ -122,7 +122,7 @@ public class ManaTBActivity extends Activity implements AdapterView.OnItemClickL
 	
 	@Override
 	public boolean onItemLongClick(AdapterView<?> a,View v,int i,long id){
-		SQLiteDatabase db = new ContractDbHelper(this,ManaTB.get(this).getDb(),schema).getWritableDatabase();
+		SQLiteDatabase db = new ContractDbHelper(this,ManaTB.get(null).getDb(),schema).getWritableDatabase();
 		SQLiteCursor cursor = (SQLiteCursor)((ListView)a).getItemAtPosition(i);
 		cursor.moveToPosition(i);
 		db.delete(schema.getName(),"_id = "+cursor.getInt(0),null);
@@ -135,7 +135,7 @@ public class ManaTBActivity extends Activity implements AdapterView.OnItemClickL
 			if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
 				File script = new File(getExternalFilesDir(null),"script.txt");
 				if(script != null){
-					SQLiteDatabase db = new ContractDbHelper(this,ManaTB.get(this).getDb(),ManaTB.get(this).getDefaultTable()).getWritableDatabase();
+					SQLiteDatabase db = new ContractDbHelper(this,ManaTB.get(null).getDb(),ManaTB.get(null).getDefaultTable()).getWritableDatabase();
 					BufferedReader in = new BufferedReader(new FileReader(script));
 					while(in.ready()){
 						db.execSQL(in.readLine());

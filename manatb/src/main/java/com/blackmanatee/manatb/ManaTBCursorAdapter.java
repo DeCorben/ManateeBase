@@ -24,7 +24,7 @@ public class ManaTBCursorAdapter extends SimpleCursorAdapter{
 	public void bindView(View v,Context co,Cursor c){
 		LinearLayout ll = (LinearLayout)v;
 		ll.removeAllViews();
-		ManaTB tb = ManaTB.get(con);
+		ManaTB tb = ManaTB.get(null);
 		Contract tab = tb.getTable(table);
 		ArrayList<Column> cols = tab.getColumns();
 		for(int z=0;z<cols.size();z++){

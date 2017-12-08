@@ -48,8 +48,10 @@ public class Contract implements BaseColumns{
 
 	public String toXml(){
 		String out = "<contract>\n";
+		if(table != null)
+			out += "\t<table_name>"+table+"</table_name>\n";
 		for(Column c:grid){
-			out += "\t"+c.toXml().replaceAll("\n","\t\n")+"\n";
+			out += "\t"+c.toXml().replaceAll("\n","\n\t")+"\n";
 		}
 		return out + "</contract>";
 	}

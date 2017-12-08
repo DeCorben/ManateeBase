@@ -22,7 +22,7 @@ public class ManaTCursorBinder implements SimpleCursorAdapter.ViewBinder{
 			if(debug)
 				Log.d("manaT","Id:"+v.getContentDescription());
 			LinearLayout l = (LinearLayout)v;
-			ManaTB tb = ManaTB.get(env);
+			ManaTB tb = ManaTB.get(null);
 			Contract con = tb.getTable(table_name);
 			SQLiteCursor cur = (SQLiteCursor)c;
 			cur.moveToPosition(i);

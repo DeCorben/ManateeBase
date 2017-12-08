@@ -25,7 +25,7 @@ public class TableEditActivity extends Activity{
 		String conName = in.getStringExtra("name");
 		Contract con;
 		if(conName != null)
-			con = ManaTB.get(this).getTable(conName);
+			con = ManaTB.get(null).getTable(conName);
 		else
 			con = new Contract();
 		//populate table name
@@ -101,7 +101,7 @@ public class TableEditActivity extends Activity{
 		String labels = ((EditText)findViewById(R.id.labels)).getText().toString();
 		String weights = ((EditText)findViewById(R.id.weights)).getText().toString();
 		String editTable = getIntent().getStringExtra("name");
-		Contract con = editTable==null?new Contract():ManaTB.get(this).getTable(editTable);
+		Contract con = editTable==null?new Contract():ManaTB.get(null).getTable(editTable);
 		boolean first = true;
 		for(String n:cols.split(";")){
 			con.addColumn(new Column(n,0,"",1,true,first?true:false));
@@ -123,7 +123,7 @@ public class TableEditActivity extends Activity{
 		con.setLayoutWeights(ti);
 		if(con.getName().length() == 0){
 			con.setName(name);
-			ManaTB.get(this).addTable(con);
+			ManaTB.get(null).addTable(con);
 		}
 		else
 			con.setName(name);
