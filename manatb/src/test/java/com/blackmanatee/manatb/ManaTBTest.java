@@ -1,6 +1,7 @@
 package com.blackmanatee.manatb;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import org.junit.*;
 import static junit.framework.Assert.*;
@@ -11,7 +12,6 @@ import static org.mockito.Mockito.*;
  */
 
 public class ManaTBTest {
-
     @After
     public void after(){
         ManaTB.clear();
@@ -26,9 +26,9 @@ public class ManaTBTest {
         tb.addTable(two);
         SharedPreferences.Editor pref = mock(SharedPreferences.Editor.class);
         tb.saveContracts(pref);
-        verify(pref).putString("contractList","lorem;sit");
         verify(pref).putString("lorem",one.toXml());
         verify(pref).putString("sit",two.toXml());
+        verify(pref).putString("contractList","lorem;sit");
     }
 
     @Test
@@ -36,7 +36,7 @@ public class ManaTBTest {
         SharedPreferences pref = mock(SharedPreferences.class);
         Contract one = new Contract("lorem",new String[]{"ipsum","dolor"},new int[]{0,1},new int[]{3,1},new String[]{"Ipsum","Dolor"});
         Contract two = new Contract("sit",new String[]{"amet","consectetuer"},new int[]{0,1},new int[]{3,1},new String[]{"Amet","Consectetuer"});
-        when(pref.getString("list","")).thenReturn("lorem;sit");
+        when(pref.getString("contractList","")).thenReturn("lorem;sit");
         when(pref.getString("lorem","")).thenReturn(one.toXml());
         when(pref.getString("sit","")).thenReturn(two.toXml());
         ManaTB tb = ManaTB.get(pref);

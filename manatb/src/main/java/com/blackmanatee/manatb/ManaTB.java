@@ -13,8 +13,8 @@ public final class ManaTB {
 	//--id column is retaining rows causing non-deletes
 	//multiple tables
 	//multiple database files
-	
-	private static final boolean debug = true;
+
+    private static final boolean debug = false;
 	//public static final String MANA_DB = "manat.db";
 	//public static final Contract META =
 	//	new Contract("meta",new String[]{"name","cols","types","weights","labels"},new int[]{0,0,0,0,0},new int[]{1,1,1,1,1},new String[]{"Name","Columns","Types","Weights","Labels"});
@@ -34,8 +34,10 @@ public final class ManaTB {
     }
 
     public static ManaTB get(SharedPreferences p){
-        if(me == null)
+        if(me == null) {
+            System.out.println("constructing ManaTB");
             me = new ManaTB(p);
+        }
         return me;
     }
 
@@ -46,12 +48,22 @@ public final class ManaTB {
             Contract c = getTable(s);
             pref.putString(s,c.toXml());
         }
-        pref.putString("list",list);
+        pref.putString("contractList",list.substring(1));
         pref.commit();
 	}
 
 	public void loadContracts(SharedPreferences pref){
-
+        System.out.println("loadContracts");
+        //assemble list of tables
+        String[] table_list = pref.getString("contractList","").split(";");
+        //parse tables
+        for(String t:table_list){
+            try {
+                System.out.println("adding table:"+t);
+                addTable(new Contract(pref.getString(t, "")));
+            }
+            catch(Exception ex){}
+        }
 	}
 
     public static void clear(){
