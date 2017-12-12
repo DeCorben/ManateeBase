@@ -1,26 +1,8 @@
 package com.blackmanatee.manatb;
-import android.app.*;
-import android.content.*;
 import android.provider.*;
-import android.util.Log;
-import android.view.*;
-import android.widget.*;
-import com.blackmanatee.manatb.*;
-import com.blackmanatee.lagoon.*;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserFactory;
-
-import java.io.StringReader;
-import java.lang.reflect.Array;
+import org.xmlpull.v1.*;
+import java.io.*;
 import java.util.*;
-
-import javax.xml.parsers.DocumentBuilderFactory;
 
 public class Contract implements BaseColumns{
 	//needs:
@@ -64,23 +46,39 @@ public class Contract implements BaseColumns{
 				case XmlPullParser.TEXT:
 					switch(tag.peek()){
 						case "table_name":
+							if(debug)
+								System.out.println("table_name:"+parse.getText());
 							table = parse.getText();
 						case "column":
+							if(debug)
+								System.out.println("column:");
 							c = new Column();
 						case "column_name":
+							if(debug)
+								System.out.println("column_name:"+parse.getText());
 							c.setName(parse.getText());
 						case "type":
+							if(debug)
+								System.out.println("type:"+parse.getText());
 							if(parse.getText().equals("string"))
 								c.setType(Contract.T_TEXT);
 							else if(parse.getText().equals("integer"))
 								c.setType(Contract.T_INT);
 						case "label":
+							if(debug)
+								System.out.println("label:"+parse.getText());
 							c.setLabel(parse.getText());
 						case "weight":
+							if(debug)
+								System.out.println("weight:"+parse.getText());
 							c.setWeight(Integer.parseInt(parse.getText()));
 						case "show_column":
+							if(debug)
+								System.out.println("show_column:"+parse.getText());
 							c.setShow(Boolean.parseBoolean(parse.getText()));
 						case "primary":
+							if(debug)
+								System.out.println("primary:"+parse.getText());
 							c.setPrim(Boolean.parseBoolean(parse.getText()));
 					}
 					break;

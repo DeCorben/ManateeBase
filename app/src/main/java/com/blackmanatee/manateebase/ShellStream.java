@@ -15,5 +15,7 @@ public class ShellStream extends OutputStream{
 		console.append(Character.toString((char)p1));
 	}
 	
-	
+	public static void out(String s){
+		System.out.println(s);
+	}
 }
