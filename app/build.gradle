@@ -20,9 +20,9 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    testImplementation 'junit:junit:4.12'
-    implementation project(':manatb')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestCompile 'com.android.support.test:runner:1.0.1'
+    testCompile 'junit:junit:+' 'junit:junit:4.12'
+    compile project(':manatb')
 }
