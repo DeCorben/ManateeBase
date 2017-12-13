@@ -14,7 +14,7 @@ public final class ManaTB {
 	//multiple tables
 	//multiple database files
 
-    private static final boolean debug = false;
+    private static final boolean debug = true;
 	//public static final String MANA_DB = "manat.db";
 	//public static final Contract META =
 	//	new Contract("meta",new String[]{"name","cols","types","weights","labels"},new int[]{0,0,0,0,0},new int[]{1,1,1,1,1},new String[]{"Name","Columns","Types","Weights","Labels"});
@@ -62,7 +62,9 @@ public final class ManaTB {
                 System.out.println("adding table:"+t);
                 addTable(new Contract(pref.getString(t, "")));
             }
-            catch(Exception ex){}
+            catch(Exception ex){
+				System.out.println(ex.toString());
+			}
         }
 	}
 

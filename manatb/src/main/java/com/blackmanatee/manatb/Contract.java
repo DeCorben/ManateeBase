@@ -42,6 +42,10 @@ public class Contract implements BaseColumns{
 			switch(parse.next()){
 				case XmlPullParser.START_TAG:
 					tag.push(parse.getName());
+					if("column".equals(tag.peek()))
+						c = new Column();
+					if(debug)
+						System.out.println("Start tag:"+parse.getName());
 					break;
 				case XmlPullParser.TEXT:
 					switch(tag.peek()){
@@ -49,14 +53,12 @@ public class Contract implements BaseColumns{
 							if(debug)
 								System.out.println("table_name:"+parse.getText());
 							table = parse.getText();
-						case "column":
-							if(debug)
-								System.out.println("column:");
-							c = new Column();
+							break;
 						case "column_name":
 							if(debug)
 								System.out.println("column_name:"+parse.getText());
 							c.setName(parse.getText());
+							break;
 						case "type":
 							if(debug)
 								System.out.println("type:"+parse.getText());
@@ -64,35 +66,44 @@ public class Contract implements BaseColumns{
 								c.setType(Contract.T_TEXT);
 							else if(parse.getText().equals("integer"))
 								c.setType(Contract.T_INT);
+							break;
 						case "label":
 							if(debug)
 								System.out.println("label:"+parse.getText());
 							c.setLabel(parse.getText());
+							break;
 						case "weight":
 							if(debug)
 								System.out.println("weight:"+parse.getText());
 							c.setWeight(Integer.parseInt(parse.getText()));
+							break;
 						case "show_column":
 							if(debug)
 								System.out.println("show_column:"+parse.getText());
 							c.setShow(Boolean.parseBoolean(parse.getText()));
+							break;
 						case "primary":
 							if(debug)
 								System.out.println("primary:"+parse.getText());
 							c.setPrim(Boolean.parseBoolean(parse.getText()));
+							break;
 					}
 					break;
 				case XmlPullParser.END_TAG:
 					if(tag.peek().equals("column"))
 						addColumn(c);
 					tag.pop();
+					if(debug)
+						System.out.println("End tag:"+parse.getName());
 					break;
 				case XmlPullParser.END_DOCUMENT:
+					if(debug)
+						System.out.println("End Document:"+parse.getName());
 					parsing = false;
 					break;
 			}
 		}
-		System.out.println(toXml());
+		System.out.println("Xml:"+toXml());
 	}
 
 	private void init(String n,String[] c,int[] t,int[] w,String[] h){
