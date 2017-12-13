@@ -26,7 +26,7 @@ public class MainActivity extends ShellActivity{
 		ed.commit();
 		ManaTB tb = ManaTB.get(pref);
 		if(one.equals(tb.getTable("lorem")))
-			System.out.println("Contact one match");
+			System.out.println("Contract one match");
 		else
 			out("No match one");
 		/*if(two.equals(tb.getTable("sit")))

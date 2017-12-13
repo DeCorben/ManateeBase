@@ -6,6 +6,8 @@ import android.content.*;
 import android.database.sqlite.*;
 import android.util.*;
 
+import org.xmlpull.v1.XmlPullParser;
+
 public final class ManaTB {
 	//Needs:
 	//contract table
@@ -14,7 +16,7 @@ public final class ManaTB {
 	//multiple tables
 	//multiple database files
 
-    private static final boolean debug = true;
+    private static final boolean debug = false;
 	//public static final String MANA_DB = "manat.db";
 	//public static final Contract META =
 	//	new Contract("meta",new String[]{"name","cols","types","weights","labels"},new int[]{0,0,0,0,0},new int[]{1,1,1,1,1},new String[]{"Name","Columns","Types","Weights","Labels"});
@@ -35,7 +37,8 @@ public final class ManaTB {
 
     public static ManaTB get(SharedPreferences p){
         if(me == null) {
-            System.out.println("constructing ManaTB");
+            if(debug)
+                System.out.println("constructing ManaTB");
             me = new ManaTB(p);
         }
         return me;
@@ -53,14 +56,16 @@ public final class ManaTB {
 	}
 
 	public void loadContracts(SharedPreferences pref){
-        System.out.println("loadContracts");
+        if(debug)
+            System.out.println("loadContracts");
         //assemble list of tables
         String[] table_list = pref.getString("contractList","").split(";");
         //parse tables
         for(String t:table_list){
             try {
-                System.out.println("adding table:"+t);
-                addTable(new Contract(pref.getString(t, "")));
+                if(debug)
+                    System.out.println("adding table:"+t);
+                addTable(Contract.parseContract(pref.getString(t, "")));
             }
             catch(Exception ex){
 				System.out.println(ex.toString());

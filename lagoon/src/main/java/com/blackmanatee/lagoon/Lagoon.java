@@ -33,4 +33,13 @@ public final class Lagoon {
 		}
 		return out;
 	}
+
+	public static int smallest(int[] s){
+        int out = s[0];
+        for(int i:s){
+            if(out > i)
+                out = i;
+        }
+        return out;
+    }
 }
