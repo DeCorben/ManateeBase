@@ -34,10 +34,10 @@ public final class Lagoon {
 		return out;
 	}
 
-	public static int smallest(int[] s){
+	public static int smallestPositive(int[] s){
         int out = s[0];
         for(int i:s){
-            if(out > i)
+            if(out > i && i >= 0)
                 out = i;
         }
         return out;

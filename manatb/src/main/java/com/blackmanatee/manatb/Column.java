@@ -1,10 +1,39 @@
 package com.blackmanatee.manatb;
 
+import com.blackmanatee.lagoon.Tag;
+
 public class Column{
 	private static final boolean debug = true;
 	private String name,label;
 	private int type,weight;
 	private boolean show,prim;
+
+	public Column(Tag t){
+		for(Tag c:t.getTags()){
+			switch(c.getTag_name()){
+				case "column_name":
+					name = c.getContent();
+					break;
+				case "type":
+					if("string".equals(c.getContent()))
+						type = Contract.T_TEXT;
+					else if("integer".equals(c.getContent()))
+						type = Contract.T_INT;
+					break;
+				case "label":
+					label = c.getContent();
+					break;
+				case "weight":
+					weight = Integer.parseInt(c.getContent());
+					break;
+				case "show_column":
+					show = Boolean.parseBoolean(c.getContent());
+					break;
+				case "primary":
+					prim = Boolean.parseBoolean(c.getContent());
+			}
+		}
+	}
 
 	public String toXml(){
 		String out = "<column>\n";

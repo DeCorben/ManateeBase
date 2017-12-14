@@ -1,5 +1,8 @@
 package com.blackmanatee.manatb;
 import android.provider.*;
+
+import com.blackmanatee.lagoon.Tag;
+
 import org.xmlpull.v1.*;
 import java.io.*;
 import java.util.*;
@@ -10,7 +13,7 @@ public class Contract implements BaseColumns{
 	//weights need defaults when columns are added
 	//full type constants
 
-	private static final boolean debug = false;
+	private static final boolean debug = true;
 
 	public static final int T_TEXT = 0;
 	public static final int T_INT = 1;
@@ -32,86 +35,14 @@ public class Contract implements BaseColumns{
 		init(n,c,t,w,h);
 	}
 
-	public static Contract parseContract(XmlPullParser parse){
-		Contract out = new Contract();
-		ArrayDeque<String> tag = new ArrayDeque<>();
-		boolean parsing = true;
-		Column c = null;
-		while(parsing){
-			try{
-				switch(parse.next()){
-					case XmlPullParser.START_TAG:
-						tag.push(parse.getName());
-						if("column".equals(tag.peek()))
-							c = new Column();
-						if(debug)
-							System.out.println("Start tag:"+parse.getName());
-						break;
-					case XmlPullParser.TEXT:
-						switch(tag.peek()){
-							case "table_name":
-								if(debug)
-									System.out.println("table_name:"+parse.getText());
-								out.setName(parse.getText());
-								break;
-							case "column_name":
-								if(debug)
-									System.out.println("column_name:"+parse.getText());
-								c.setName(parse.getText());
-								break;
-							case "type":
-								if(debug)
-									System.out.println("type:"+parse.getText());
-								if(parse.getText().equals("string"))
-									c.setType(Contract.T_TEXT);
-								else if(parse.getText().equals("integer"))
-									c.setType(Contract.T_INT);
-								break;
-							case "label":
-								if(debug)
-									System.out.println("label:"+parse.getText());
-								c.setLabel(parse.getText());
-								break;
-							case "weight":
-								if(debug)
-									System.out.println("weight:"+parse.getText());
-								c.setWeight(Integer.parseInt(parse.getText()));
-								break;
-							case "show_column":
-								if(debug)
-									System.out.println("show_column:"+parse.getText());
-								c.setShow(Boolean.parseBoolean(parse.getText()));
-								break;
-							case "primary":
-								if(debug)
-									System.out.println("primary:"+parse.getText());
-								c.setPrim(Boolean.parseBoolean(parse.getText()));
-								break;
-						}
-						break;
-					case XmlPullParser.END_TAG:
-						if(tag.peek().equals("column"))
-							out.addColumn(c);
-						tag.pop();
-						if(debug)
-							System.out.println("End tag:"+parse.getName());
-						break;
-					case XmlPullParser.END_DOCUMENT:
-						if(debug)
-							System.out.println("End Document:"+parse.getName());
-						parsing = false;
-						break;
-				}
-			}
-			catch(Exception ex){
-				System.out.println("Charlie:");
-				ex.printStackTrace(System.out);
-				System.exit(1);
-			}
+	public Contract(Tag t){
+		grid = new ArrayList<>();
+		for(Tag c:t.getTags()){
+			if("table_name".equals(c.getTag_name()))
+				table = c.getContent();
+			else if("column".equals(c.getTag_name()))
+				grid.add(new Column(c));
 		}
-		if(debug)
-			System.out.println("Xml:"+out.toXml());
-		return out;
 	}
 
 	private void init(String n,String[] c,int[] t,int[] w,String[] h){
