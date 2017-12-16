@@ -16,7 +16,7 @@ import android.support.test.runner.*;
 @RunWith(AndroidJUnit4.class)
 public class ManaTBActivityTest {
     @Rule
-    public ActivityTestRule<TableViewActivity> rule = new ActivityTestRule<TableViewActivity>(TableViewActivity.class);
+    public ActivityTestRule<TableViewActivity> rule = new ActivityTestRule<>(TableViewActivity.class);
 
     @Before
     public void setUp() throws Exception {

@@ -127,7 +127,7 @@ public class Contract implements BaseColumns{
 			grid.get(z).setWeight(w[z]);
 		}
 	}
-	
+
 	public void setLabels(String[] l){
 		 for(int z=0;z<l.length;z++){
 			 grid.get(z).setLabel(l[z]);

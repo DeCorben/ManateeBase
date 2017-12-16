@@ -3,13 +3,15 @@ package com.blackmanatee.manatb;
 import com.blackmanatee.lagoon.Tag;
 
 public class Column{
-	private static final boolean debug = true;
+	private static final boolean debug = false;
 	private String name,label;
 	private int type,weight;
 	private boolean show,prim;
 
 	public Column(Tag t){
 		for(Tag c:t.getTags()){
+			if(debug)
+				System.out.println("Tag:"+c.getTag_name());
 			switch(c.getTag_name()){
 				case "column_name":
 					name = c.getContent();
@@ -21,9 +23,13 @@ public class Column{
 						type = Contract.T_INT;
 					break;
 				case "label":
+					if(debug)
+						System.out.println("label:"+c.getContent());
 					label = c.getContent();
 					break;
 				case "weight":
+					if(debug)
+						System.out.println(c.getContent());
 					weight = Integer.parseInt(c.getContent());
 					break;
 				case "show_column":
@@ -56,22 +62,45 @@ public class Column{
 	}
 
 	@Override
-	public boolean equals(Object o){
-		if(!(o instanceof Column))
+	public boolean equals(Object o) {
+		if (debug)
+			System.out.println("Column.equals:");
+		if (!(o instanceof Column)) {
+			if (debug)
+				System.out.println("Failed class check");
 			return false;
-		Column comp = (Column)o;
-		if(!name.equals(comp.getName()))
+		}
+		Column comp = (Column) o;
+		if (!name.equals(comp.getName())) {
+			if (debug)
+				System.out.println("Failed name check:" + name + "|" + comp.getName());
 			return false;
-		if(!label.equals(comp.getLabel()))
+		}
+		if (!label.equals(comp.getLabel())){
+			if (debug)
+				System.out.println("Failed label check:"+label+"|"+comp.getLabel());
 			return false;
-		if(type != comp.getType())
+		}
+		if(type != comp.getType()) {
+			if (debug)
+				System.out.println("Failed type check:" + type + "|" + comp.getType());
 			return false;
-		if(weight != comp.getWeight())
+		}
+		if(weight != comp.getWeight()) {
+			if (debug)
+				System.out.println("Failed weight check:" + weight + "|" + comp.getWeight());
 			return false;
-		if(show != comp.isShow())
+		}
+		if(show != comp.isShow()) {
+			if (debug)
+				System.out.println("Failed show check:" + show);
 			return false;
-		if(prim != comp.isPrim())
+		}
+		if(prim != comp.isPrim()) {
+			if (debug)
+				System.out.println("Failed primary check:" + prim);
 			return false;
+		}
 		return true;
 	}
 	

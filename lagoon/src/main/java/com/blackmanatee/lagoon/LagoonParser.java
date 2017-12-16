@@ -7,6 +7,7 @@ import java.util.ArrayDeque;
  */
 
 public class LagoonParser {
+    private static final boolean debug = false;
     private static String state;
     private static ArrayDeque<Tag> stack;
 
@@ -16,13 +17,16 @@ public class LagoonParser {
         stack = new ArrayDeque<>();
         int i = 0;
         String b = "";
+        boolean ending = false;
         while(a.length() > 0) {
+            String prev_state = state;
             switch (state) {
                 case "no_document":
                     i = a.indexOf("<");
                     b = a.substring(0, i);
-                    a = a.substring(i++);
-                    if(a.charAt(0) == '?'){
+                    i++;
+                    a = a.substring(i);
+                    if(a.charAt(0) != '?'){
                         stack.push(new Tag());
                         state = "new_tag";
                     }
@@ -30,12 +34,20 @@ public class LagoonParser {
                 case "no_tag":
                     i = a.indexOf("<");
                     b = a.substring(0, i).trim();
-                    a = a.substring(i++);
-                    if (b.length() > 0)
+                    i++;
+                    a = a.substring(i);
+                    if (b.length() > 0) {
+                        if(debug)
+                            System.out.println("Content to "+stack.peek().getTag_name()+":"+b);
                         stack.peek().setContent(b);
-                    Tag t = new Tag();
-                    stack.peek().addTag(t);
-                    stack.push(t);
+                    }
+                    if(a.charAt(0) != '/') {
+                        Tag t = new Tag();
+                        stack.peek().addTag(t);
+                        if (debug)
+                            System.out.println("child of " + stack.peek().getTag_name());
+                        stack.push(t);
+                    }
                     state = "new_tag";
                     break;
                 case "new_tag":
@@ -44,15 +56,12 @@ public class LagoonParser {
                     if(a.charAt(i) == ' ')
                         i++;
                     else if(a.charAt(i) == '/'){
-                        state = "end_tag";
+                        state = "end_of_tag";
+                        ending = true;
                     }
                     if(b.length() > 0) {
-                        if (stack.peekLast().getTag_name().equals(b)) {
-                            state = "end_document";
-                        } else {
-                            stack.peek().setTag_name(b);
-                            state = "named_tag";
-                        }
+                        stack.peek().setTag_name(b);
+                        state = "named_tag";
                     }
                     a = a.substring(i);
                     break;
@@ -62,33 +71,43 @@ public class LagoonParser {
                     while(b.length() > 0){
                         int e = b.indexOf("=");
                         String c = b.substring(0,e==-1?b.length():e);
-                        b = b.substring(e==-1?b.length():e++);
+                        b = b.substring(e==-1?b.length():e+1);
                         b.replaceFirst("\"","");
                         e = b.indexOf("\"");
                         String d = b.substring(0,e==-1?b.length():e);
-                        b = b.substring(e==-1?b.length():e++);
+                        b = b.substring(e==-1?b.length():e+1);
                         stack.peek().addAttribute(c,d);
                     }
-                    if(a.charAt(i) == '/') {
-                        state = "end_tag";
-                    }
+                    state = "end_of_tag";
                     a = a.substring(i);
+                    if(a.startsWith("/>"))
+                        ending = true;
                     break;
                 case "end_document":
                     a = "";
                     break;
-                case "end_tag":
-                    stack.pop();
-                    int z = 0;
-                    while(z<a.length()&&(a.charAt(z)=='/'||a.charAt(z)=='>')){
-                        z++;
+                case "end_of_tag":
+                    i = a.indexOf(">");
+                    b = a.substring(0,i);
+                    //should only pop on endING tags, not the end of all tags
+                    if(ending && stack.size() > 1) {
+                        if(debug)
+                            System.out.println("popping "+stack.pop().getTag_name());
+                        else
+                            stack.pop();
                     }
-                    a = a.substring(z);
+                    int z = 0;
+                    i++;
+                    a = a.substring(i);
+                    state = "no_tag";
+                    ending = false;
                     break;
                 default:
                     System.out.println("Unhandled state:" + state);
                     break;
             }
+            if(debug)
+                System.out.println("parse:"+prev_state+"-"+b);
         }
         return stack.peekLast();
     }

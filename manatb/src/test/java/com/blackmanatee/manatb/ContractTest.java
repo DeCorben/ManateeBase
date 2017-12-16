@@ -12,6 +12,31 @@ import static org.junit.Assert.*;
 
 public class ContractTest {
     private Contract c;
+    @Before
+    public void before(){
+        c = new Contract("foo",new String[]{"name","value"},new int[]{0,1},new int[]{3,1},new String[]{"Name","Value"});
+    }
+
+    @Test
+    public void testSetLabels(){
+        c.setLabels(new String[]{"lorem","ipsum"});
+        assertEquals("lorem",c.getColumns().get(0).getLabel());
+        assertEquals("ipsum",c.getColumns().get(1).getLabel());
+    }
+
+    @Test
+    public void testSetLayoutWeights(){
+        c.setLayoutWeights(new int[]{4,7});
+        assertEquals(4,c.getColumns().get(0).getWeight());
+        assertEquals(7,c.getColumns().get(1).getWeight());
+    }
+
+    @Test
+    public void testSetGetTypes(){
+        c.setTypes(new int[]{1,0});
+        assertEquals(1,c.getType(0));
+        assertEquals(0,c.getType(1));
+    }
 
     @Test
     public void testToXml(){
@@ -35,11 +60,6 @@ public class ContractTest {
                     "\t</column>\n" +
                     "</contract>"
                     ,c.toXml());
-    }
-
-    @Before
-    public void before(){
-        c = new Contract("foo",new String[]{"name","value"},new int[]{0,1},new int[]{3,1},new String[]{"Name","Value"});
     }
 
     @Test

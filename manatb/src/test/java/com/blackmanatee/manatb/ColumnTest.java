@@ -4,11 +4,25 @@ package com.blackmanatee.manatb;
  * Created by DeCorben on 11/19/2017.
  */
 
+import com.blackmanatee.lagoon.LagoonParser;
+
 import org.junit.*;
 import static org.junit.Assert.*;
 
 public class ColumnTest {
     private Column c;
+
+    @Test
+    public void testColumnTag(){
+        assertEquals(c,new Column(LagoonParser.parse("<column>\n" +
+                "\t<column_name>lorem</column_name>\n" +
+                "\t<type>string</type>\n" +
+                "\t<label>Ipsum</label>\n" +
+                "\t<weight>1</weight>\n" +
+                "\t<show_column>true</show_column>\n" +
+                "\t<primary>false</primary>\n" +
+                "</column>")));
+    }
 
     @Test
     public void testToXml(){
