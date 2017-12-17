@@ -1,14 +1,27 @@
 package com.blackmanatee.manatb;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.database.sqlite.SQLiteCursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.*;
-import android.content.*;
-import android.app.*;
-import android.database.sqlite.*;
-import android.util.*;
-import android.os.*;
-import java.io.*;
-import android.widget.*;
+import android.os.Environment;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 
 public class ManaTBActivity extends Activity implements AdapterView.OnItemClickListener
 	,AdapterView.OnItemLongClickListener{
@@ -43,18 +56,13 @@ public class ManaTBActivity extends Activity implements AdapterView.OnItemClickL
 		String dbName = getIntent().getStringExtra("db");
 		if(dbName == null)
 			dbName = "";
-		/*if(dbName.equals("meta")){
-			//schema = tb.META;
-			//schHelp = new ContractDbHelper(this,tb.MANA_DB,schema);
-		}
-		else{*/
-			String tab = getIntent().getStringExtra("name");
-			if(debug)
-				Log.d("manaT","Table:"+tab);
-			schema = tab==null?tb.getDefaultTable():tb.getTable(tab);
-			schHelp = new ContractDbHelper(this, tb.getDb(), schema);
-		//}
+		String tab = getIntent().getStringExtra("name");
+		if(debug)
+			Log.d("manaT","Table:"+tab);
+		schema = tab==null?tb.getDefaultTable():tb.getTable(tab);
+		schHelp = new ContractDbHelper(this, tb.getDb(), schema);
 		SQLiteDatabase db = schHelp.getReadableDatabase();
+		//causes NPE if there are no contracts loaded
 		SQLiteCursor cursor = (SQLiteCursor) db.query(schema.getName(), null, null, null, null, null, schema.getColumn(0) + " ASC", null);
 		if(debug)
 			Log.d("manaT","cursor complete");

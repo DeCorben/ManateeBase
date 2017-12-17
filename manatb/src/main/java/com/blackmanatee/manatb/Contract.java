@@ -13,7 +13,7 @@ public class Contract implements BaseColumns{
 	//weights need defaults when columns are added
 	//full type constants
 
-	private static final boolean debug = true;
+	private static final boolean debug = false;
 
 	public static final int T_TEXT = 0;
 	public static final int T_INT = 1;

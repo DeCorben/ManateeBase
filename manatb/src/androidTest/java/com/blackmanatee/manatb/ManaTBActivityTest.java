@@ -1,14 +1,20 @@
 package com.blackmanatee.manatb;
 
+import android.content.SharedPreferences;
+import android.support.test.espresso.intent.rule.IntentsTestRule;
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
+
 import org.junit.*;
-import org.junit.runner.*;
-import static org.junit.Assert.*;
-import android.support.test.*;
+import org.junit.runner.RunWith;
+
 import static android.support.test.espresso.Espresso.*;
 import static android.support.test.espresso.action.ViewActions.*;
+import static android.support.test.espresso.intent.Intents.*;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.*;
 import static android.support.test.espresso.matcher.ViewMatchers.*;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.*;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by DeCorben on 8/9/2017.
@@ -16,23 +22,25 @@ import android.support.test.runner.*;
 @RunWith(AndroidJUnit4.class)
 public class ManaTBActivityTest {
     @Rule
-    public ActivityTestRule<TableViewActivity> rule = new ActivityTestRule<>(TableViewActivity.class);
+    public ActivityTestRule<ManaTBActivity> rule = new ActivityTestRule<>(ManaTBActivity.class);
+    @Rule
+    public IntentsTestRule<MaintainActivity> addRule = new IntentsTestRule<>(MaintainActivity.class);
 
-    @Before
-    public void setUp() throws Exception {
+    private static SharedPreferences pref;
 
+    @BeforeClass
+    public static void setup(){
+        pref = mock(SharedPreferences.class);
+        Contract one = new Contract("lorem",new String[]{"ipsum;dolor"},new int[]{0,1},new int[]{3,1},new String[]{"Ipsum","Dolor"});
+        when(pref.getString("contractList","lorem"));
+        when(pref.getString("lorem",one.toXml()));
     }
+
+
 
     @Test
-    public void testAddTable(){
+    public void testAddRow(){
         onView(withId(R.id.dbAddAction)).perform(click());
-        onView(withId(R.id.tableName)).perform(typeText("foo"));
-
+        intended(hasExtra("table","lorem"));
     }
-
-    @After
-    public void tearDown() throws Exception {
-
-    }
-
 }
