@@ -7,6 +7,7 @@ import android.util.*;
 public class ContractDbHelper extends SQLiteOpenHelper{
 	private static final boolean debug = true;
 	//Needs:
+	//db wrapper methods
 	//handle multiple tables
 	
 	public static final int VER = 1;

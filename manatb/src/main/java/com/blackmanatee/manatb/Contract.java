@@ -105,7 +105,9 @@ public class Contract implements BaseColumns{
 	}
 
 	public String getColumn(int i){
-		return grid.get(i).getName();
+		if(grid.size() > i)
+			return grid.get(i).getName();
+		return "";
 	}
 
 	public int getColCount(){

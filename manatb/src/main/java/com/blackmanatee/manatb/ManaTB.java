@@ -222,7 +222,7 @@ public final class ManaTB {
         for(String k:tables.keySet()){
             return tables.get(k);
         }
-        return null;
+        return new Contract();
     }
 	
 	public ArrayList<String> getTableList(){

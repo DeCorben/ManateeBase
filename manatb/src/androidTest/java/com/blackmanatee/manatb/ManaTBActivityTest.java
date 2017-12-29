@@ -1,8 +1,10 @@
 package com.blackmanatee.manatb;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
-import android.support.test.rule.ActivityTestRule;
+import android.support.test.rule.*;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.*;
@@ -20,26 +22,34 @@ import static org.mockito.Mockito.*;
  * Created by DeCorben on 8/9/2017.
  */
 @RunWith(AndroidJUnit4.class)
-public class ManaTBActivityTest {
+public class ManaTBActivityTest{
+    //GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH
+    //Stupid Activity won't test because backend contract tracking won't mock
     @Rule
-    public ActivityTestRule<ManaTBActivity> rule = new ActivityTestRule<>(ManaTBActivity.class);
-    @Rule
-    public IntentsTestRule<MaintainActivity> addRule = new IntentsTestRule<>(MaintainActivity.class);
+    public IntentsTestRule<ManaTBActivity> rule = new IntentsTestRule<ManaTBActivity>(ManaTBActivity.class){
+        protected void beforeActivityLaunched(){
+            super.beforeActivityLaunched();
+            Contract one = new Contract("lorem",new String[]{"ipsum","dolor"},new int[]{0,1},new int[]{3,1},new String[]{"Ipsum","Dolor"});
+            ManaTB.get(null).addTable(one);
+        }
 
-    private static SharedPreferences pref;
-
-    @BeforeClass
-    public static void setup(){
-        pref = mock(SharedPreferences.class);
-        Contract one = new Contract("lorem",new String[]{"ipsum;dolor"},new int[]{0,1},new int[]{3,1},new String[]{"Ipsum","Dolor"});
-        when(pref.getString("contractList","lorem"));
-        when(pref.getString("lorem",one.toXml()));
-    }
-
-
+        protected void afterActivityLaunched(){
+            super.afterActivityLaunched();
+            SharedPreferences pref = getActivity().getSharedPreferences("manaTB",Context.MODE_PRIVATE);
+            ManaTB.get(pref).saveContracts(pref.edit());
+            ContractDbHelper help = new ContractDbHelper(getActivity(),"test.db",ManaTB.get(null).getTable("lorem"));
+            SQLiteDatabase db = help.getReadableDatabase();
+        }
+    };
+    //@Rule
+    //public IntentsTestRule<MaintainActivity> addRule = new IntentsTestRule<>(MaintainActivity.class);
 
     @Test
     public void testAddRow(){
+        SharedPreferences pref = rule.getActivity().getSharedPreferences("manaTB", Context.MODE_PRIVATE);
+        Contract one = new Contract("lorem",new String[]{"ipsum;dolor"},new int[]{0,1},new int[]{3,1},new String[]{"Ipsum","Dolor"});
+        ManaTB.get(pref).addTable(one);
+        assertEquals(one,ManaTB.get(pref).getTable("lorem"));
         onView(withId(R.id.dbAddAction)).perform(click());
         intended(hasExtra("table","lorem"));
     }
