@@ -2,8 +2,7 @@ package com.blackmanatee.manateebase;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.view.*;
-
+import android.view.View;
 import com.blackmanatee.manatb.Contract;
 import com.blackmanatee.manatb.ManaTB;
 import com.blackmanatee.manatb.ManaTBActivity;
