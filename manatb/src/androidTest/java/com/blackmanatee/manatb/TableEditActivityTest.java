@@ -34,7 +34,7 @@ import static org.junit.Assert.fail;
 @RunWith(AndroidJUnit4.class)
 public class TableEditActivityTest {
     @Rule
-    public ActivityTestRule<TableViewActivity> rule = new ActivityTestRule<TableViewActivity>(TableViewActivity.class);
+    public ActivityTestRule<TableListActivity> rule = new ActivityTestRule<TableListActivity>(TableListActivity.class);
 
     @Before
     public void before(){

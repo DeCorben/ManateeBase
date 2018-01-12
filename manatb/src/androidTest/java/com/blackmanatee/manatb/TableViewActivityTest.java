@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
-import android.support.test.rule.*;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.*;
@@ -16,17 +15,16 @@ import static android.support.test.espresso.intent.Intents.*;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.*;
 import static android.support.test.espresso.matcher.ViewMatchers.*;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 /**
  * Created by DeCorben on 8/9/2017.
  */
 @RunWith(AndroidJUnit4.class)
-public class ManaTBActivityTest{
+public class TableViewActivityTest {
     //GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH
     //Stupid Activity won't test because backend contract tracking won't mock
     @Rule
-    public IntentsTestRule<ManaTBActivity> rule = new IntentsTestRule<ManaTBActivity>(ManaTBActivity.class){
+    public IntentsTestRule<TableViewActivity> rule = new IntentsTestRule<TableViewActivity>(TableViewActivity.class){
         protected void beforeActivityLaunched(){
             super.beforeActivityLaunched();
             Contract one = new Contract("lorem",new String[]{"ipsum","dolor"},new int[]{0,1},new int[]{3,1},new String[]{"Ipsum","Dolor"});

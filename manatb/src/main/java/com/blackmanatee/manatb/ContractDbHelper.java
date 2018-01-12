@@ -10,9 +10,9 @@ public class ContractDbHelper extends SQLiteOpenHelper{
 	//db wrapper methods
 	//handle multiple tables
 	
-	public static final int VER = 1;
+	protected static final int VER = 1;
 	
-	public Contract schema;
+	protected Contract schema;
 
 	public ContractDbHelper(Context con,String d,Contract s){
 		super(con,d,null,VER);
@@ -41,5 +41,13 @@ public class ContractDbHelper extends SQLiteOpenHelper{
 	public void onUpgrade(SQLiteDatabase p1, int p2, int p3){
 		if(debug)
 			Log.d("manaT","ContractDbHelper.onUpgrade");
+	}
+
+	public void setContract(Contract c){
+		schema = c;
+	}
+
+	public Contract getContract(){
+		return schema;
 	}
 }

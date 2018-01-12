@@ -6,8 +6,7 @@ import android.view.*;
 
 import com.blackmanatee.manatb.Contract;
 import com.blackmanatee.manatb.ManaTB;
-import com.blackmanatee.manatb.ManaTBActivity;
-import com.blackmanatee.manatb.TableViewActivity;
+import com.blackmanatee.manatb.TableListActivity;
 
 import static com.blackmanatee.manateebase.ShellStream.out;
 
@@ -15,7 +14,7 @@ import static com.blackmanatee.manateebase.ShellStream.out;
  * Created by DeCorben on 7/30/2017.
  */
 
-public class MainActivity extends TableViewActivity{
+public class MainActivity extends TableListActivity {
 	//@Override
 	public void engage(View v){
 		testContractLoad();

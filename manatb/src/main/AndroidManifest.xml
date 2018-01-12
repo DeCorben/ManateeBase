@@ -2,13 +2,13 @@
     package="com.blackmanatee.manatb">
     <application android:allowBackup="true"
         android:supportsRtl="true">
-        <activity android:name=".ManaTBActivity"
+        <activity android:name=".TableViewActivity"
             android:title="@string/manatb_title"
             />
         <activity android:name=".MaintainActivity"
             android:title="@string/maintain_title"
             />
-        <activity android:name=".TableViewActivity"
+        <activity android:name=".TableListActivity"
             android:title="@string/t_view_title"
             />
         <activity android:name=".TableEditActivity"

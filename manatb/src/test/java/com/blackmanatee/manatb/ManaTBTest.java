@@ -1,8 +1,6 @@
 package com.blackmanatee.manatb;
 
 import android.content.SharedPreferences;
-import android.util.Log;
-
 import org.junit.*;
 import static junit.framework.Assert.*;
 import static org.mockito.Mockito.*;
