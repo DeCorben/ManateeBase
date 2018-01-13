@@ -26,6 +26,8 @@ import java.io.FileWriter;
 public class TableViewActivity extends Activity implements AdapterView.OnItemClickListener
 	,AdapterView.OnItemLongClickListener{
 	private static final boolean debug = false;
+
+	private ManaTB tb;
     
 	//needs:
 	//compatibility with META table
@@ -47,7 +49,12 @@ public class TableViewActivity extends Activity implements AdapterView.OnItemCli
 		if(debug)
 			Log.d("manaT","ManaTB resume");
 		//retrieve database contents
-		ManaTB tb = ManaTB.get(null);
+		try {
+			tb = new ManaTB(getResources().getXml(R.xml.manatb));
+		}
+		catch(Exception ex){
+			//stuff
+		}
 		if(tb.getDb().equals(""))
 			tb.setDb("manatbase.db");
 		if(debug)
@@ -130,7 +137,7 @@ public class TableViewActivity extends Activity implements AdapterView.OnItemCli
 	
 	@Override
 	public boolean onItemLongClick(AdapterView<?> a,View v,int i,long id){
-		SQLiteDatabase db = new ContractDbHelper(this,ManaTB.get(null).getDb(),schema).getWritableDatabase();
+		SQLiteDatabase db = new ContractDbHelper(this,tb.getDb(),schema).getWritableDatabase();
 		SQLiteCursor cursor = (SQLiteCursor)((ListView)a).getItemAtPosition(i);
 		cursor.moveToPosition(i);
 		db.delete(schema.getName(),"_id = "+cursor.getInt(0),null);
@@ -143,7 +150,7 @@ public class TableViewActivity extends Activity implements AdapterView.OnItemCli
 			if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
 				File script = new File(getExternalFilesDir(null),"script.txt");
 				if(script != null){
-					SQLiteDatabase db = new ContractDbHelper(this,ManaTB.get(null).getDb(),ManaTB.get(null).getDefaultTable()).getWritableDatabase();
+					SQLiteDatabase db = new ContractDbHelper(this,tb.getDb(),tb.getDefaultTable()).getWritableDatabase();
 					BufferedReader in = new BufferedReader(new FileReader(script));
 					while(in.ready()){
 						db.execSQL(in.readLine());

@@ -25,7 +25,12 @@ public class MaintainActivity extends Activity{
 	public void onCreate(Bundle state){
 		super.onCreate(state);
 		setContentView(R.layout.raw_maint);
-		tb = ManaTB.get(null);
+		try {
+			tb = new ManaTB(getResources().getXml(R.xml.manatb));
+		}
+		catch(Exception ex){
+			//stuff
+		}
 		String table = getIntent().getStringExtra("table");
 		schema = table==null?tb.getDefaultTable():tb.getTable(table);
 		row = new HashMap<>();

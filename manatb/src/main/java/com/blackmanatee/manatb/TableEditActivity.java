@@ -8,6 +8,8 @@ import android.widget.*;
 
 public class TableEditActivity extends Activity{
 	private static final boolean debug = false;
+
+	private ManaTB tb;
 	
 	//Needs:
 	//handle invalid input to boxes
@@ -23,9 +25,15 @@ public class TableEditActivity extends Activity{
 		super.onResume();
 		Intent in = getIntent();
 		String conName = in.getStringExtra("name");
+		try {
+			tb = new ManaTB(getResources().getXml(R.xml.manatb));
+		}
+		catch(Exception ex){
+			//stuff
+		}
 		Contract con;
 		if(conName != null)
-			con = ManaTB.get(null).getTable(conName);
+			con = tb.getTable(conName);
 		else
 			con = new Contract();
 		//populate table name
@@ -101,7 +109,7 @@ public class TableEditActivity extends Activity{
 		String labels = ((EditText)findViewById(R.id.labels)).getText().toString();
 		String weights = ((EditText)findViewById(R.id.weights)).getText().toString();
 		String editTable = getIntent().getStringExtra("name");
-		Contract con = editTable==null?new Contract():ManaTB.get(null).getTable(editTable);
+		Contract con = editTable==null?new Contract():tb.getTable(editTable);
 		boolean first = true;
 		for(String n:cols.split(";")){
 			con.addColumn(new Column(n,0,"",1,true,first?true:false));
@@ -123,7 +131,7 @@ public class TableEditActivity extends Activity{
 		con.setLayoutWeights(ti);
 		if(con.getName().length() == 0){
 			con.setName(name);
-			ManaTB.get(null).addTable(con);
+			tb.addTable(con);
 		}
 		else
 			con.setName(name);

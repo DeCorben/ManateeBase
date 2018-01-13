@@ -1,12 +1,64 @@
 package com.blackmanatee.manatb;
 
+import android.content.res.XmlResourceParser;
+
 import com.blackmanatee.lagoon.Tag;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
+import java.util.ArrayDeque;
 
 public class Column{
 	private static final boolean debug = false;
 	private String name,label;
 	private int type,weight;
 	private boolean show,prim;
+
+	public Column(XmlResourceParser res) throws XmlPullParserException, IOException {
+		ArrayDeque<String> stack = new ArrayDeque<>();
+		while(!(res.getName().equals("column") && res.getEventType() == XmlPullParser.END_TAG)){
+			switch(res.next()){
+				case XmlPullParser.START_TAG:
+					stack.push(res.getName());
+					break;
+				case XmlPullParser.TEXT:
+					switch(stack.peek()){
+						case "column_name":
+							name = res.getText();
+							break;
+						case "type":
+							switch (res.getText()){
+								case "string":
+									type = Contract.T_TEXT;
+									break;
+								case "integer":
+									type = Contract.T_INT;
+									break;
+							}
+							break;
+						case "label":
+							label = res.getText();
+							break;
+						case "weight":
+							weight = Integer.parseInt(res.getText());
+							break;
+						case "show_column":
+							show = Boolean.parseBoolean(res.getText());
+							break;
+						case "primary":
+							prim = Boolean.parseBoolean(res.getText());
+							break;
+					}
+					break;
+				case XmlPullParser.END_TAG:
+					if(!res.getName().equals("column"))
+						stack.pop();
+					break;
+			}
+		}
+	}
 
 	public Column(Tag t){
 		for(Tag c:t.getTags()){

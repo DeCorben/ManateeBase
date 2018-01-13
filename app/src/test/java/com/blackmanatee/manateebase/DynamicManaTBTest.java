@@ -2,6 +2,8 @@ package com.blackmanatee.manateebase;
 
 import org.junit.Test;
 
+import java.io.FileReader;
+
 import static org.junit.Assert.*;
 
 /**
@@ -9,9 +11,11 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class ExampleUnitTest {
+public class DynamicManaTBTest {
+    //save to xml
     @Test
-    public void addition_isCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
+    public void testToXml(){
+        String base = "";
+        FileReader read = new FileReader(new File(getExternalFilesDir("manatb"),"testTb.xml"));
     }
 }

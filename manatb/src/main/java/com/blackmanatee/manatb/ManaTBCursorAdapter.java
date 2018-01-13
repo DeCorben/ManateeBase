@@ -12,6 +12,7 @@ public class ManaTBCursorAdapter extends SimpleCursorAdapter{
 	private Class<?> glove;
 	private Context con;
 	private String table;
+	private ManaTB tb;
 
 	public ManaTBCursorAdapter(Context co,int l,Cursor c,String t,Class<?> g){
 		super(co,l,c,new String[]{},new int[]{},0);
@@ -24,7 +25,12 @@ public class ManaTBCursorAdapter extends SimpleCursorAdapter{
 	public void bindView(View v,Context co,Cursor c){
 		LinearLayout ll = (LinearLayout)v;
 		ll.removeAllViews();
-		ManaTB tb = ManaTB.get(null);
+		try {
+			tb = new ManaTB(con.getResources().getXml(R.xml.manatb));
+		}
+		catch(Exception ex){
+			//stuff
+		}
 		Contract tab = tb.getTable(table);
 		ArrayList<Column> cols = tab.getColumns();
 		for(int z=0;z<cols.size();z++){

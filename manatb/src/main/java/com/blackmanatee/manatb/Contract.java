@@ -1,4 +1,5 @@
 package com.blackmanatee.manatb;
+import android.content.res.XmlResourceParser;
 import android.provider.*;
 
 import com.blackmanatee.lagoon.Tag;
@@ -42,6 +43,36 @@ public class Contract implements BaseColumns{
 				table = c.getContent();
 			else if("column".equals(c.getTag_name()))
 				grid.add(new Column(c));
+		}
+	}
+
+	public Contract(String n,String c,String t,String w){
+		String[] cols = c.split(";");
+		String[] labels = new String[cols.length];
+		String[] ty = t.split(";");
+		String[] we = w.split(";");
+		int[] types = new int[cols.length];
+		int[] weights = new int[cols.length];
+		for(int z=0;z<labels.length;z++){
+			labels[z] = cols[z].substring(0,1).toUpperCase()+cols[z].substring(1);
+			types[z] = Integer.parseInt(ty[z]);
+			weights[z] = Integer.parseInt(we[z]);
+		}
+		init(n,cols,types,weights,labels);
+	}
+
+	public Contract(XmlResourceParser res) throws XmlPullParserException, IOException {
+		grid = new ArrayList<>();
+		while(!(res.getName().equals("contract") && res.getEventType() == XmlPullParser.END_TAG)){
+			switch(res.next()){
+				case XmlPullParser.START_TAG:
+					if(res.getName().equals("column"))
+						grid.add(new Column(res));
+					break;
+				case XmlPullParser.TEXT:
+					setName(res.getText());
+					break;
+			}
 		}
 	}
 

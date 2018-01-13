@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manatb>
+    <db_name>testTb.db</db_name>
+    <contract>
+        <table_name>lorem</table_name>
+        <column>
+            <column_name>ipsum</column_name>
+            <type>string</type>
+            <label>Ipsum</label>
+            <weight>3</weight>
+            <show_column>true</show_column>
+            <primary>true</primary>
+        </column>
+        <column>
+            <column_name>dolor</column_name>
+            <type>integer</type>
+            <label>Dolor</label>
+            <weight>1</weight>
+            <show_column>true</show_column>
+            <primary>false</primary>
+        </column>
+    </contract>
+    <contract>
+        <table_name>sit</table_name>
+        <column>
+            <column_name>amet</column_name>
+            <type>string</type>
+            <label>Amet</label>
+            <weight>1</weight>
+            <show_column>true</show_column>
+            <primary>true</primary>
+        </column>
+        <column>
+            <column_name>consectetuer</column_name>
+            <type>string</type>
+            <label>Consectetuer</label>
+            <weight>1</weight>
+            <show_column>true</show_column>
+            <primary>false</primary>
+        </column>
+    </contract>
+</manatb>

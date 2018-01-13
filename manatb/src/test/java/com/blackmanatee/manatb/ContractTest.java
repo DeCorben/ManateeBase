@@ -4,6 +4,7 @@ import org.junit.*;
 
 import java.util.ArrayList;
 
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 /**
@@ -15,6 +16,11 @@ public class ContractTest {
     @Before
     public void before(){
         c = new Contract("foo",new String[]{"name","value"},new int[]{0,1},new int[]{3,1},new String[]{"Name","Value"});
+    }
+
+    @Test
+    public void testCreateStringStringStringString(){
+        assertThat(new Contract("foo","name;value","0;1","3;1"),is(c));
     }
 
     @Test
@@ -75,15 +81,8 @@ public class ContractTest {
     }
 
     @Test
-    public void testAddGetColumn(){
-        try{
-            String dummy = c.getColumn(2);
-            fail();
-        }
-        catch(Exception ex){
-            c.addColumn(new Column("lorem",0,"Ipsum",1,true,false));
-            assertEquals("lorem",c.getColumn(2));
-        }
+    public void testGetColumn(){
+        assertThat(c.getColumn(0),equalTo("name"));
     }
 
     @Test
