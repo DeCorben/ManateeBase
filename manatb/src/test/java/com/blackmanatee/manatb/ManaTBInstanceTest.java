@@ -57,19 +57,39 @@ public class ManaTBInstanceTest{
 		tb.addTable(new Contract("lorem",new String[]{"ipsum","dolor"},new int[]{0,1},new int[]{3,1},new String[]{"Ipsum","Dolor"}));
 		tb.addTable(new Contract("sit",new String[]{"amet","consectetuer"},new int[]{0,0},new int[]{1,1},new String[]{"Amet","Consectetuer"}));
 	}
+
+	@Test
+	public void testEquals(){
+		assertThat(false,equalTo(tb.equals("nope")));
+		ManaTB ay = new ManaTB();
+		assertThat(ay,not(equalTo(tb)));
+		ay.setDb("testTb.db");
+		assertThat(ay,not(equalTo(tb)));
+		ay.addTable(new Contract("lorem",new String[]{"ipsum","dolor"},new int[]{0,1},new int[]{3,1},new String[]{"Ipsum","Dolor"}));
+		ay.addTable(new Contract("sit",new String[]{"porttitor","consectetuer"},new int[]{0,0},new int[]{1,1},new String[]{"Amet","Consectetuer"}));
+		assertThat(ay,not(equalTo(tb)));
+		try {
+			ay.loadXml(new StubParser(DATA));
+		}
+		catch(Exception ex){
+			ex.printStackTrace(System.out);
+		}
+		assertThat(ay,equalTo(tb));
+	}
 	
 	//instantiate from xml resource
 	@Test
 	public void testCreateXml() throws Exception{
 		ManaTB ay = new ManaTB(new StubParser(DATA));
-		assertThat(ay,is(tb));
+		assertThat(ay,equalTo(tb));
 	}
 	
 	//refresh/load xml
 	@Test
-	public void testLoadXml(){
+	public void testLoadXml() throws Exception{
 		ManaTB ay = new ManaTB();
 		assertThat(ay,not(equalTo(tb)));
+		ay.loadXml(new StubParser(DATA));
 		assertThat(ay,equalTo(tb));
 	}
 	
@@ -85,6 +105,7 @@ public class ManaTBInstanceTest{
 	public void testRemoveContract(){
 		tb.deleteTable("sit");
 		ManaTB ay = new ManaTB();
+		ay.setDb("testTb.db");
 		ay.addTable(new Contract("lorem","ipsum;dolor","0;1","3;1"));
 		assertThat(tb,equalTo(ay));
 	}
@@ -109,5 +130,6 @@ public class ManaTBInstanceTest{
 	@Test
 	public void testDefaultTable(){
 		assertThat(tb.getDefaultTable(),equalTo(new Contract("lorem","ipsum;dolor","0;1","3;1")));
+		assertThat(new ManaTB().getDefaultTable(),equalTo(new Contract()));
 	}
 }
