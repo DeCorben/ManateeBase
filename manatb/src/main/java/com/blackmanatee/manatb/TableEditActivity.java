@@ -6,6 +6,8 @@ import android.util.*;
 import android.view.*;
 import android.widget.*;
 
+import static com.blackmanatee.lagoon.Sugar.echo;
+
 public class TableEditActivity extends Activity{
 	private static final boolean debug = false;
 

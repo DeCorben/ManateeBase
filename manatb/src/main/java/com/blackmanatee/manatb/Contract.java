@@ -2,6 +2,7 @@ package com.blackmanatee.manatb;
 import android.content.res.XmlResourceParser;
 import android.provider.*;
 
+import com.blackmanatee.lagoon.Sugar;
 import com.blackmanatee.lagoon.Tag;
 
 import org.xmlpull.v1.*;
@@ -63,7 +64,7 @@ public class Contract implements BaseColumns{
 
 	public Contract(XmlResourceParser res) throws XmlPullParserException, IOException {
 		grid = new ArrayList<>();
-		while(!(res.getName().equals("contract") && res.getEventType() == XmlPullParser.END_TAG)){
+		while(!("contract".equals(res.getName()) && res.getEventType() == XmlPullParser.END_TAG)){
 			switch(res.next()){
 				case XmlPullParser.START_TAG:
 					if(res.getName().equals("column"))
@@ -73,6 +74,7 @@ public class Contract implements BaseColumns{
 					setName(res.getText());
 					break;
 			}
+			//System.out.println("Contract:"+ Sugar.eventType[res.getEventType()]+"->"+res.getName()+"->"+res.getText());
 		}
 	}
 

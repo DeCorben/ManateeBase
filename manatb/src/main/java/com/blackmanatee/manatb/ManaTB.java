@@ -4,15 +4,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import android.content.res.XmlResourceParser;
+
+import com.blackmanatee.lagoon.Sugar;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 public class ManaTB {
 	//Needs:
-	//contract table
-	//-update on delete
-	//--id column is retaining rows causing non-deletes
-	//multiple tables
 	//multiple database files
 
     private static final boolean debug = false;
@@ -58,6 +57,7 @@ public class ManaTB {
                     setDb(res.getText());
                     break;
             }
+            //System.out.println("ManaTB:"+ Sugar.eventType[res.getEventType()]+"->"+res.getName()+"->"+res.getText());
         }
     }
 

@@ -6,8 +6,14 @@ import android.content.Intent;
 import android.support.test.espresso.intent.matcher.IntentMatchers;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 import org.junit.*;
 import org.junit.runner.RunWith;
 
@@ -27,14 +33,7 @@ import static org.junit.Assert.*;
 @RunWith(AndroidJUnit4.class)
 public class TableListActivityTest {
     @Rule
-    public IntentsTestRule<TableListActivity> rule = new IntentsTestRule<TableListActivity>(TableListActivity.class){
-        @Override
-        protected void beforeActivityLaunched(){
-            super.beforeActivityLaunched();
-            ManaTB tb = ManaTB.get(null);
-            tb.addTable(new Contract("lorem",new String[]{"ipsum","dolor"},new int[]{0,1},new int[]{3,1},new String[]{"Ipsum","Dolor"}));
-        }
-    };
+    public IntentsTestRule<TableListActivity> rule = new IntentsTestRule<TableListActivity>(TableListActivity.class);
 
     @Test
     public void testDeleteItem(){
@@ -48,14 +47,15 @@ public class TableListActivityTest {
     @Test
     public void testAddButton(){
         //Given
-        Contract one = new Contract("sit",new String[]{},new int[]{},new int[]{},new String[]{});
+        Contract one = new Contract("magna",new String[]{},new int[]{},new int[]{},new String[]{});
         Intent i = new Intent();
-        i.putExtra("name","sit");
+        i.putExtra("name","magna");
         intending(toPackage("com.blackmanatee.manatb.TableEditActivity")).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK,i));
         //When
         onView(withId(R.id.dbAddAction)).perform(click());
+
         //Then
-        onData(is("sit")).inAdapterView(withId(R.id.tableList)).check(matches(isDisplayed()));
+        onData(is("magna")).inAdapterView(withId(R.id.tableList)).check(matches(isDisplayed()));
     }
 
     @Test
@@ -69,13 +69,8 @@ public class TableListActivityTest {
     @Test
     public void testView(){
         //When
-        onData(is("lorem")).inAdapterView(withId(R.id.tableList)).perform(click());
+        onData(equalTo("lorem")).inAdapterView(withId(R.id.tableList)).perform(click());
         //Then
         intended(hasExtra("name","lorem"));
-    }
-
-    @After
-    public void after(){
-        ManaTB.clear();
     }
 }
