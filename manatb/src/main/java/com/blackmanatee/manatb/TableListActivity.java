@@ -1,6 +1,5 @@
 package com.blackmanatee.manatb;
 
-import static com.blackmanatee.lagoon.Sugar.*;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +17,6 @@ import com.blackmanatee.lagoon.DeleteAdapter;
 
 public class TableListActivity extends Activity{
 	public static final boolean debug = false;
-	public static final int EDIT_CONTRACT = 1;
 	public ManaTB tb;
 
 	@Override
@@ -34,7 +32,6 @@ public class TableListActivity extends Activity{
 			tb = new ManaTB(getResources().getXml(R.xml.manatb));
 		}
 		catch(Exception ex){
-        	Log.d("manat","Exception:"+ex.toString());
         	ex.printStackTrace(System.out);
         	tb = new ManaTB();
 		}
@@ -48,24 +45,21 @@ public class TableListActivity extends Activity{
         return true;
     }
 
-    @Override
-	protected void onActivityResult(int req,int res,Intent in){
-    	if(req == EDIT_CONTRACT && res == Activity.RESULT_OK){
-			((DeleteCursorAdapter)((ListView)findViewById(R.id.tableList)).getAdapter()).notifyDataSetChanged();
-		}
-	}
-
 	public void addClick(MenuItem m){
-		startActivityForResult(new Intent(this,TableEditActivity.class),TableListActivity.EDIT_CONTRACT);
+		startActivity(new Intent(this,TableEditActivity.class));
 	}
 	
 	public void editClick(View v){
 		Intent in = new Intent(this,TableViewActivity.class);
 		in.putExtra("name",((TextView)v).getText().toString());
-		startActivityForResult(in,TableListActivity.EDIT_CONTRACT);
+		startActivity(in);
 	}
 	
 	public void deleteClick(View v){
 		String item = v.getContentDescription().toString();
+		tb.deleteTable(item);
+		DeleteAdapter da = (DeleteAdapter)((ListView)findViewById(R.id.tableList)).getAdapter();
+		da.remove(item);
+		da.notifyDataSetChanged();
 	}
 }
