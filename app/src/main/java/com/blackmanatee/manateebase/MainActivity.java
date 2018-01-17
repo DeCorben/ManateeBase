@@ -6,36 +6,32 @@ import android.view.View;
 import com.blackmanatee.manatb.Contract;
 import com.blackmanatee.manatb.ManaTB;
 import com.blackmanatee.manatb.TableListActivity;
+import com.blackmanatee.manatb.test.*;
 
-import static com.blackmanatee.manateebase.ShellStream.out;
+import static com.blackmanatee.manateebase.ShellStream.echo;
 
 /**
  * Created by DeCorben on 7/30/2017.
  */
 
-public class MainActivity extends TableListActivity {
+public class MainActivity extends ShellActivity {	
 	//@Override
 	public void engage(View v){
-		testContractLoad();
+		try{
+			runSuite(new ManaTBInstanceTest());
+		}
+		catch(Exception ex){
+			ex.printStackTrace(System.out);
+		}
 	}
-
-	private void testContractLoad(){
-		SharedPreferences pref = getSharedPreferences("manaTables", Context.MODE_PRIVATE);
-		Contract one = new Contract("lorem",new String[]{"ipsum","dolor"},new int[]{0,1},new int[]{3,1},new String[]{"Ipsum","Dolor"});
-		Contract two = new Contract("sit",new String[]{"amet","consectetuer"},new int[]{0,1},new int[]{3,1},new String[]{"Amet","Consectetuer"});
-		SharedPreferences.Editor ed = pref.edit();
-		ed.putString("contractList","lorem;sit");
-		ed.putString("lorem",one.toXml());
-		ed.putString("sit",two.toXml());
-		ed.commit();
-		ManaTB tb = ManaTB.get(pref);
-		if(one.equals(tb.getTable("lorem")))
-			System.out.println("Contract one matches");
-		else
-			out("No match one");
-		if(two.equals(tb.getTable("sit")))
-			System.out.println("Contract two matches");
-		else
-			out("No match two");
+	
+	private void runSuite(ShellCase suite) throws Exception{
+		suite.shellFirst();
+		for(int z=0;z<suite.getTestCount();z++){
+			suite.shellBefore();
+			suite.runTest(z);
+			suite.shellAfter();
+		}
+		suite.shellLast();
 	}
 }

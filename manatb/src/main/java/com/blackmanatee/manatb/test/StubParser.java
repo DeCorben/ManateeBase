@@ -1,4 +1,4 @@
-package com.blackmanatee.manatb;
+package com.blackmanatee.manatb.test;
 
 import android.content.res.XmlResourceParser;
 

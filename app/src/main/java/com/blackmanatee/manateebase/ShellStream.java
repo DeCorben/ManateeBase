@@ -10,12 +10,11 @@ public class ShellStream extends OutputStream{
 	}
 
 	@Override
-	public void write(int p1) throws IOException
-	{
+	public void write(int p1){
 		console.append(Character.toString((char)p1));
 	}
 	
-	public static void out(String s){
+	public static void echo(String s){
 		System.out.println(s);
 	}
 }
