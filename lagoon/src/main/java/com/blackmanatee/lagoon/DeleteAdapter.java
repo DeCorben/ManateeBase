@@ -8,19 +8,20 @@ import java.util.*;
 
 public class DeleteAdapter extends ArrayAdapter<String>{
 	//Needs:
-	//Edit/long click/multi-button handling
 	
 	private Class<?> glove;
+	private int layout;
 	
 	public DeleteAdapter(Context c,int l,List<String> d,Class<?> g){
 		super(c,l,d);
 		glove = g;
+		layout = l;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent){
 		if(convertView == null)
-			convertView = ((Activity)getContext()).getLayoutInflater().inflate(R.layout.item_with_del,parent,false);
+			convertView = ((Activity)getContext()).getLayoutInflater().inflate(layout,parent,false);
 		convertView.findViewById(R.id.itemDelete).setContentDescription(getItem(position));
 		((TextView)convertView.findViewById(R.id.itemLabel)).setText(getItem(position));
 		((TextView)convertView.findViewById(R.id.itemLabel)).setOnLongClickListener(new View.OnLongClickListener(){

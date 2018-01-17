@@ -2,6 +2,7 @@ package com.blackmanatee.manatb;
 
 import android.content.res.XmlResourceParser;
 
+import com.blackmanatee.lagoon.Sugar;
 import com.blackmanatee.lagoon.Tag;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -18,7 +19,7 @@ public class Column{
 
 	public Column(XmlResourceParser res) throws XmlPullParserException, IOException {
 		ArrayDeque<String> stack = new ArrayDeque<>();
-		while(!(res.getName().equals("column") && res.getEventType() == XmlPullParser.END_TAG)){
+		while(!("column".equals(res.getName()) && res.getEventType() == XmlPullParser.END_TAG)){
 			switch(res.next()){
 				case XmlPullParser.START_TAG:
 					stack.push(res.getName());
@@ -57,6 +58,7 @@ public class Column{
 						stack.pop();
 					break;
 			}
+			//System.out.println("Column:"+ Sugar.eventType[res.getEventType()]+"->"+res.getName()+"->"+res.getText());
 		}
 	}
 
