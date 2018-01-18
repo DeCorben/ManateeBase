@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import com.blackmanatee.manatb.*;
 
 public class ManaTBInstanceTest extends ShellCase{
-	protected int testCount = 8;
 	private static ManaTB tb;
 	private static final String DATA = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
 	"<manatb>\n" +
@@ -52,6 +51,10 @@ public class ManaTBInstanceTest extends ShellCase{
 	"        </column>\n" +
 	"    </contract>\n" +
 	"</manatb>";
+
+	public ManaTBInstanceTest(){
+		testCount = 8;
+	}
 
 	@Override
 	@Before
