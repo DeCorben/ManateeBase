@@ -2,12 +2,13 @@ package com.blackmanatee.manatb.test;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
+import static com.blackmanatee.lagoon.Sugar.echo;
 import org.junit.*;
 import java.util.ArrayList;
 import com.blackmanatee.manatb.*;
 
 public class ManaTBInstanceTest extends ShellCase{
-	protected int testCount = 7;
+	protected int testCount = 8;
 	private static ManaTB tb;
 	private static final String DATA = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
 	"<manatb>\n" +
@@ -85,59 +86,99 @@ public class ManaTBInstanceTest extends ShellCase{
 			case 6:
 				testDefaultTable();
 				break;
+			case 7:
+				testEquals();
+				break;
 		}
+	}
+
+	@Test
+	public void testEquals(){
+		echo("ManaTBInstanceTest.testEquals:");
+		assertThat(false,equalTo(tb.equals("nope")));
+		ManaTB ay = new ManaTB();
+		assertThat(ay,not(equalTo(tb)));
+		ay.setDb("testTb.db");
+		assertThat(ay,not(equalTo(tb)));
+		ay.addTable(new Contract("lorem",new String[]{"ipsum","dolor"},new int[]{0,1},new int[]{3,1},new String[]{"Ipsum","Dolor"}));
+		ay.addTable(new Contract("sit",new String[]{"porttitor","consectetuer"},new int[]{0,0},new int[]{1,1},new String[]{"Amet","Consectetuer"}));
+		assertThat(ay,not(equalTo(tb)));
+		try {
+			ay.loadXml(new StubParser(DATA));
+		}
+		catch(Exception ex){
+			ex.printStackTrace(System.out);
+		}
+		assertThat(ay,equalTo(tb));
+		echo("ManaTBInstanceTest.testEquals:passed");
 	}
 
 	//instantiate from xml resource
 	@Test
-	public void testCreateXml() throws Exception{
+	public void testCreateXml() throws Exception,Error{
+		echo("ManaTBInstanceTest.testCreateXml:");
 		ManaTB ay = new ManaTB(new StubParser(DATA));
 		assertThat(ay,is(tb));
+		echo("ManaTBInstanceTest.testCreateXml:passed");
 	}
 
 	//refresh/load xml
 	@Test
-	public void testLoadXml(){
+	public void testLoadXml() throws Exception,Error{
+		echo("ManaTBInstanceTest.testLoadXml:");
 		ManaTB ay = new ManaTB();
 		assertThat(ay,not(equalTo(tb)));
+		ay.loadXml(new StubParser(DATA));
 		assertThat(ay,equalTo(tb));
+		echo("ManaTBInstanceTest.testLoadXml:passed");
 	}
 
 	//addGetContract
 	@Test
-	public void testAddGetContract(){
+	public void testAddGetContract() throws Exception,Error{
+		echo("ManaTBInstanceTest.testAddGetContract:");
 		tb.addTable(new Contract("adipiscing","elit;vestibulum","0;0","3;2"));
 		assertThat(tb.getTable("adipiscing"),is(new Contract("adipiscing","elit;vestibulum","0;0","3;2")));
+		echo("ManaTBInstanceTest.testAddGetContract:passed");
 	}
 
 	//removeContract
 	@Test
-	public void testRemoveContract(){
+	public void testRemoveContract() throws Exception,Error{
+		echo("ManaTBInstanceTest.testRemoveContract:");
 		tb.deleteTable("sit");
 		ManaTB ay = new ManaTB();
 		ay.addTable(new Contract("lorem","ipsum;dolor","0;1","3;1"));
 		assertThat(tb,equalTo(ay));
+		echo("ManaTBInstanceTest.testRemoveContract:passed");
 	}
 
 	//setGetDbFilename
 	@Test
-	public void testSetGetFilename(){
+	public void testSetGetFilename() throws Exception,Error{
+		echo("ManaTBInstanceTest.testSetGetFilename:");
 		tb.setDb("foo.db");
 		assertThat(tb.getDb(),equalTo("foo.db"));
+		echo("ManaTBInstanceTest.testSetGetFilename:passed");
 	}
 
 	//getTableList
 	@Test
-	public void testTableList(){
+	public void testTableList() throws Exception,Error{
+		echo("ManaTBInstanceTest.testTableList:");
 		ArrayList<String> bee = new ArrayList<>();
 		bee.add("lorem");
 		bee.add("sit");
 		assertThat(tb.getTableList(),equalTo(bee));
+		echo("ManaTBInstanceTest.testTableList:passed");
 	}
 
 	//getDefaultTable
 	@Test
-	public void testDefaultTable(){
+	public void testDefaultTable() throws Exception,Error{
+		echo("ManaTBInstanceTest.testDefaultTable:");
 		assertThat(tb.getDefaultTable(),equalTo(new Contract("lorem","ipsum;dolor","0;1","3;1")));
+		assertThat(new ManaTB().getDefaultTable(),equalTo(new Contract()));
+		echo("ManaTBInstanceTest.testDefaultTable:passed");
 	}
 }
