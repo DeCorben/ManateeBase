@@ -151,6 +151,7 @@ public class ManaTBInstanceTest extends ShellCase{
 		echo("ManaTBInstanceTest.testRemoveContract:");
 		tb.deleteTable("sit");
 		ManaTB ay = new ManaTB();
+		ay.setDb("testTb.db");
 		ay.addTable(new Contract("lorem","ipsum;dolor","0;1","3;1"));
 		assertThat(tb,equalTo(ay));
 		echo("ManaTBInstanceTest.testRemoveContract:passed");

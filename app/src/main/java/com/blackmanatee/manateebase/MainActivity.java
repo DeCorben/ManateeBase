@@ -21,7 +21,7 @@ public class MainActivity extends ShellActivity {
 			runSuite(new ManaTBInstanceTest());
 			echo("End ManaTBInstanceTest:");
 		}
-		catch(Exception ex){
+		catch(Throwable ex){
 			ex.printStackTrace(System.out);
 		}
 	}
