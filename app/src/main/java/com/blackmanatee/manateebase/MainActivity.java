@@ -8,6 +8,7 @@ import com.blackmanatee.manatb.Contract;
 import com.blackmanatee.manatb.ManaTB;
 import com.blackmanatee.manatb.TableListActivity;
 import com.blackmanatee.manatb.test.*;
+import java.lang.reflect.*;
 
 /**
  * Created by DeCorben on 7/30/2017.
@@ -17,23 +18,27 @@ public class MainActivity extends ShellActivity {
 	//@Override
 	public void engage(View v){
 		try{
-			echo("Start ManaTBInstanceTest:");
 			runSuite(new ManaTBInstanceTest());
-			echo("End ManaTBInstanceTest:");
 		}
 		catch(Throwable ex){
 			ex.printStackTrace(System.out);
 		}
 	}
-
-	private void runSuite(ShellCase suite) throws Exception{
-		suite.shellFirst();
-		echo("Test Count:"+suite.getTestCount());
-		for(int z=0;z<suite.getTestCount();z++){
-			suite.shellBefore();
-			suite.runTest(z);
-			suite.shellAfter();
+	
+	private void runSuite(ShellCase s)throws Exception{
+		Class<?> suite = s.getClass();
+		echo(suite.getSimpleName()+":");
+		s.shellFirst();
+		for(Method m:suite.getMethods()){
+			if(m.getName().startsWith("test")){
+				echo(suite.getSimpleName()+"."+m.getName()+":");
+				s.shellBefore();
+				m.invoke(s);
+				s.shellAfter();
+				echo(suite.getSimpleName()+"."+m.getName()+":passed");
+			}
 		}
-		suite.shellLast();
+		s.shellLast();
+		echo(suite.getSimpleName()+":end");
 	}
 }
