@@ -5,7 +5,7 @@ import android.view.*;
 import android.widget.*;
 import java.io.*;
 
-public class ShellActivity extends Activity
+public class ShellActivity extends FragmentActivity
 {
 
 	@Override
