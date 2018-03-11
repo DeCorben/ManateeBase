@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="manatb_title">ManaTB</string>
-	<string name="cancel">Cancel</string>
-	<string name="columns">Column Names</string>
-	<string name="commit">Commit</string>
-	<string name="delete">Delete</string>
-	<string name="fields">Column Fields</string>
-	<string name="labels">Column Labels</string>
-	<string name="layout">Row Layout</string>
-	<string name="maintain_title">Edit Entry</string>
-	<string name="tables">Tables</string>
-	<string name="table_name">Table Name</string>
-	<string name="t_edit_title">Edit Table</string>
-	<string name="t_view_title">Tables</string>
-	<string name="types">Column Types</string>
-	<string name="update">Update</string>
-	<string name="weights">Column Weights</string>
+    <string name="cancel">Cancel</string>
+    <string name="columns">Column Names</string>
+    <string name="commit">Commit</string>
+    <string name="delete">Delete</string>
+    <string name="fields">Column Fields</string>
+    <string name="labels">Column Labels</string>
+    <string name="layout">Row Layout</string>
+    <string name="maintain_title">Edit Entry</string>
+    <string name="tables">Tables</string>
+    <string name="table_name">Table Name</string>
+    <string name="t_edit_title">Edit Table</string>
+    <string name="t_view_title">Tables</string>
+    <string name="types">Column Types</string>
+    <string name="update">Update</string>
+    <string name="weights">Column Weights</string>
 </resources>

@@ -1,3 +1,5 @@
 <resources>
     <string name="lagoon">Lagoon</string>
+    <string name="title_activity_lag_frag">LagFragActivity</string>
+    <string name="action_settings">Settings</string>
 </resources>

@@ -4,6 +4,7 @@ import android.os.*;
 import android.view.*;
 import android.widget.*;
 import java.io.*;
+import android.support.v4.app.FragmentActivity;
 
 public class ShellActivity extends FragmentActivity
 {

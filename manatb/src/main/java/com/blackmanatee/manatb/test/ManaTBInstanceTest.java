@@ -52,10 +52,6 @@ public class ManaTBInstanceTest extends ShellCase{
 	"    </contract>\n" +
 	"</manatb>";
 
-	public ManaTBInstanceTest(){
-		testCount = 8;
-	}
-
 	@Override
 	@Before
 	public void shellBefore(){
@@ -63,36 +59,6 @@ public class ManaTBInstanceTest extends ShellCase{
 		tb.setDb("testTb.db");
 		tb.addTable(new Contract("lorem",new String[]{"ipsum","dolor"},new int[]{0,1},new int[]{3,1},new String[]{"Ipsum","Dolor"}));
 		tb.addTable(new Contract("sit",new String[]{"amet","consectetuer"},new int[]{0,0},new int[]{1,1},new String[]{"Amet","Consectetuer"}));
-	}
-	
-	@Override
-	public void runTest(int t)throws Exception{
-		switch(t){
-			case 0:
-				testCreateXml();
-				break;
-			case 1:
-				testLoadXml();
-				break;
-			case 2:
-				testAddGetContract();
-				break;
-			case 3:
-				testRemoveContract();
-				break;
-			case 4:
-				testSetGetFilename();
-				break;
-			case 5:
-				testTableList();
-				break;
-			case 6:
-				testDefaultTable();
-				break;
-			case 7:
-				testEquals();
-				break;
-		}
 	}
 
 	@Test

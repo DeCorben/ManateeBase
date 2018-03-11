@@ -1,4 +1,8 @@
-package com.blackmanatee.manatb;
+package com.blackmanatee.manatb.test;
+
+import com.blackmanatee.manatb.Column;
+import com.blackmanatee.manatb.Contract;
+import com.blackmanatee.manatb.test.ShellCase;
 
 import org.junit.*;
 
@@ -11,10 +15,10 @@ import static org.junit.Assert.*;
  * Created by DeCorben on 7/31/2017.
  */
 
-public class ContractTest {
+public class ContractTest extends ShellCase{
     private Contract c;
-    @Before
-    public void before(){
+    @Override
+    public void shellBefore(){
         c = new Contract("foo",new String[]{"name","value"},new int[]{0,1},new int[]{3,1},new String[]{"Name","Value"});
     }
 

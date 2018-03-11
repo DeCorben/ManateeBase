@@ -1,15 +1,16 @@
-package com.blackmanatee.manatb;
+package com.blackmanatee.manatb.test;
 
 /**
  * Created by DeCorben on 11/19/2017.
  */
 
 import com.blackmanatee.lagoon.LagoonParser;
+import com.blackmanatee.manatb.Column;
 
 import org.junit.*;
 import static org.junit.Assert.*;
 
-public class ColumnTest {
+public class ColumnTest extends ShellCase{
     private Column c;
 
     @Test
@@ -37,8 +38,8 @@ public class ColumnTest {
             ,c.toXml());
     }
 
-    @Before
-    public void setup(){
+    @Override
+    public void shellBefore(){
         c = new Column("lorem",0,"Ipsum",1,true,false);
     }
 

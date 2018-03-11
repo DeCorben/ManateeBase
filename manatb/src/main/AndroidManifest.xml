@@ -1,19 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.blackmanatee.manatb">
-    <application android:allowBackup="true"
+
+    <application
+        android:allowBackup="true"
         android:supportsRtl="true">
-        <activity android:name=".TableViewActivity"
-            android:title="@string/manatb_title"
-            />
-        <activity android:name=".MaintainActivity"
-            android:title="@string/maintain_title"
-            />
-        <activity android:name=".TableListActivity"
-            android:title="@string/t_view_title"
-            />
-        <activity android:name=".TableEditActivity"
+        <activity
+            android:name=".TableViewActivity"
+            android:title="@string/manatb_title" />
+        <activity
+            android:name=".MaintainActivity"
+            android:title="@string/maintain_title" />
+        <activity
+            android:name=".TableListFragment"
+            android:title="@string/t_view_title" />
+        <activity
+            android:name=".TableEditActivity"
             android:title="@string/t_edit_title"
-			android:windowSoftInputMode="adjustResize"
-            />
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".TableListActivity"></activity>
     </application>
+
 </manifest>

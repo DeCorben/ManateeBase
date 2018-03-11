@@ -2,8 +2,6 @@ package com.blackmanatee.manatb.test;
 import org.junit.*;
 
 public class ShellCase{
-	protected int testCount = 0;
-	
 	@BeforeClass
 	public static void shellFirst(){}
 	
@@ -15,10 +13,6 @@ public class ShellCase{
 	
 	@AfterClass
 	public static void shellLast(){}
-	
-	public void runTest(int t) throws Exception{}
-	
-	public int getTestCount(){
-		return testCount;
-	}
+
+	public void loadFragment(){}
 }
